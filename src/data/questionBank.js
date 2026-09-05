@@ -1,0 +1,636 @@
+/**
+ * questionBank.js
+ * Comprehensive question bank for SkillPilot AI Gamified Q&A Platform.
+ * 
+ * 10 Categories:
+ * 1. Aptitude
+ * 2. Programming
+ * 3. DSA
+ * 4. SQL & DBMS
+ * 5. Computer Science
+ * 6. AI & Machine Learning
+ * 7. HR Interview
+ * 8. Communication
+ * 9. Coding Challenge
+ * 10. Mixed Placement Quiz
+ * 
+ * All items contain:
+ * - correct_answer
+ * - why (comprehensive explanation)
+ * - why_not_others (detailed distractor explanations)
+ * - concept, difficulty, skill, topic, subtopic, xp_reward
+ */
+
+export const QUESTION_CATEGORIES = [
+  {
+    id: 'aptitude',
+    name: 'Aptitude',
+    icon: '🧮',
+    description: 'Quantitative, Logical Reasoning & Analytical Problem Solving',
+    difficulty: 'Medium',
+    defaultXP: 50,
+    color: 'from-amber-500 to-orange-600',
+    borderColor: 'border-amber-500/30',
+    bgGlow: 'rgba(245, 158, 11, 0.12)',
+  },
+  {
+    id: 'programming',
+    name: 'Programming',
+    icon: '💻',
+    description: 'Python, C++, Java, JavaScript & Core Coding Concepts',
+    difficulty: 'Medium',
+    defaultXP: 50,
+    color: 'from-blue-500 to-cyan-500',
+    borderColor: 'border-blue-500/30',
+    bgGlow: 'rgba(59, 130, 246, 0.12)',
+  },
+  {
+    id: 'dsa',
+    name: 'DSA',
+    icon: '🌳',
+    description: 'Arrays, Linked Lists, Trees, Graphs & Dynamic Programming',
+    difficulty: 'Hard',
+    defaultXP: 60,
+    color: 'from-violet-500 to-purple-600',
+    borderColor: 'border-violet-500/30',
+    bgGlow: 'rgba(139, 92, 246, 0.12)',
+  },
+  {
+    id: 'sql_dbms',
+    name: 'SQL & DBMS',
+    icon: '🗄️',
+    description: 'Relational Queries, Joins, Normalization, Indexing & ACID',
+    difficulty: 'Medium',
+    defaultXP: 50,
+    color: 'from-emerald-500 to-teal-500',
+    borderColor: 'border-emerald-500/30',
+    bgGlow: 'rgba(16, 185, 129, 0.12)',
+  },
+  {
+    id: 'cs_fundamentals',
+    name: 'Computer Science',
+    icon: '⚙️',
+    description: 'Operating Systems, Computer Networks & System Design',
+    difficulty: 'Hard',
+    defaultXP: 60,
+    color: 'from-rose-500 to-pink-600',
+    borderColor: 'border-rose-500/30',
+    bgGlow: 'rgba(244, 63, 94, 0.12)',
+  },
+  {
+    id: 'ai_ml',
+    name: 'AI & Machine Learning',
+    icon: '🧠',
+    description: 'Supervised/Unsupervised, Neural Networks, Loss Functions & NLP',
+    difficulty: 'Hard',
+    defaultXP: 70,
+    color: 'from-fuchsia-500 to-indigo-600',
+    borderColor: 'border-fuchsia-500/30',
+    bgGlow: 'rgba(217, 70, 239, 0.12)',
+  },
+  {
+    id: 'hr_interview',
+    name: 'HR Interview',
+    icon: '🤝',
+    description: 'Behavioral Questions, STAR Methodology & Workplace Scenarios',
+    difficulty: 'Easy',
+    defaultXP: 40,
+    color: 'from-teal-400 to-emerald-600',
+    borderColor: 'border-teal-400/30',
+    bgGlow: 'rgba(20, 184, 166, 0.12)',
+  },
+  {
+    id: 'communication',
+    name: 'Communication',
+    icon: '🎤',
+    description: 'Technical Articulation, Presentation & Professional Clarity',
+    difficulty: 'Medium',
+    defaultXP: 45,
+    color: 'from-sky-400 to-blue-600',
+    borderColor: 'border-sky-400/30',
+    bgGlow: 'rgba(56, 189, 248, 0.12)',
+  },
+  {
+    id: 'coding_challenge',
+    name: 'Coding Challenge',
+    icon: '⚡',
+    description: 'Code Output Tracing, Bug Hunting & Algorithmic Snippets',
+    difficulty: 'Hard',
+    defaultXP: 75,
+    color: 'from-yellow-400 to-amber-600',
+    borderColor: 'border-yellow-400/30',
+    bgGlow: 'rgba(250, 204, 21, 0.12)',
+  },
+  {
+    id: 'mixed_quiz',
+    name: 'Mixed Placement Quiz',
+    icon: '🎯',
+    description: 'Simulated 360° Hiring Assessment Across All Disciplines',
+    difficulty: 'Boss',
+    defaultXP: 100,
+    color: 'from-purple-500 to-cyan-500',
+    borderColor: 'border-purple-500/30',
+    bgGlow: 'rgba(168, 85, 247, 0.15)',
+  },
+];
+
+export const INITIAL_QUESTIONS = [
+  // ─── 1. DSA QUESTIONS ────────────────────────────────────────────────────────
+  {
+    id: 'dsa_01',
+    category: 'dsa',
+    topic: 'Queues & Stacks',
+    subtopic: 'Queues',
+    type: 'mcq',
+    difficulty: 'Easy',
+    question: 'Which data structure follows the First-In, First-Out (FIFO) principle?',
+    options: ['Stack', 'Queue', 'Tree', 'Graph'],
+    correct_answer: 'Queue',
+    why: 'A Queue adheres to First-In First-Out (FIFO) ordering where elements are inserted at the rear (enqueue) and removed from the front (dequeue). Think of a real-world supermarket checkout line.',
+    why_not_others: {
+      'Stack': 'A Stack follows Last-In First-Out (LIFO), where the most recently added element is popped first.',
+      'Tree': 'A Tree is a hierarchical non-linear data structure with parent-child relationships, not a linear FIFO buffer.',
+      'Graph': 'A Graph consists of vertices and edges with arbitrary network connections and has no inherent FIFO ordering.',
+    },
+    concept: 'FIFO & Buffer Architecture',
+    skill: 'Data Structures',
+    recommended_next: 'Circular Queue and Double-Ended Queue (Deque)',
+    xp_reward: 50,
+  },
+  {
+    id: 'dsa_02',
+    category: 'dsa',
+    topic: 'Linked Lists',
+    subtopic: 'Cycle Detection',
+    type: 'mcq',
+    difficulty: 'Medium',
+    question: "What is the optimal time and auxiliary space complexity to detect a cycle in a singly linked list using Floyd's Cycle-Finding Algorithm (Tortoise and Hare)?",
+    options: [
+      'Time: O(N), Space: O(N)',
+      'Time: O(N), Space: O(1)',
+      'Time: O(N^2), Space: O(1)',
+      'Time: O(log N), Space: O(1)',
+    ],
+    correct_answer: 'Time: O(N), Space: O(1)',
+    why: "Floyd's algorithm uses two pointers moving at different speeds (slow by 1 node, fast by 2 nodes). If a cycle exists, the fast pointer laps and meets the slow pointer inside the cycle within O(N) steps while using only two pointer variables, requiring O(1) auxiliary space.",
+    why_not_others: {
+      'Time: O(N), Space: O(N)': 'Using a Hash Set of visited node pointers achieves O(N) time but wastes O(N) extra memory.',
+      'Time: O(N^2), Space: O(1)': 'Nested iteration to check if a node has been visited earlier takes quadratic time and is suboptimal.',
+      'Time: O(log N), Space: O(1)': 'Linked lists must be traversed linearly; binary/logarithmic skipping is impossible without indexed access.',
+    },
+    concept: 'Two Pointers & Cycle Invariant',
+    skill: 'Linked Lists',
+    recommended_next: 'Finding the start node of a Linked List cycle',
+    xp_reward: 60,
+  },
+  {
+    id: 'dsa_03',
+    category: 'dsa',
+    topic: 'Arrays & Dynamic Programming',
+    subtopic: 'Maximum Subarray',
+    type: 'code_output',
+    difficulty: 'Medium',
+    question: 'What does Kadane’s algorithm return for the array: [-2, 1, -3, 4, -1, 2, 1, -5, 4]?',
+    code_snippet: `def max_subarray(nums):
+    max_so_far = current_max = nums[0]
+    for x in nums[1:]:
+        current_max = max(x, current_max + x)
+        max_so_far = max(max_so_far, current_max)
+    return max_so_far`,
+    options: ['4', '5', '6', '7'],
+    correct_answer: '6',
+    why: 'The contiguous subarray with the maximum sum is [4, -1, 2, 1], whose sum is 4 + (-1) + 2 + 1 = 6.',
+    why_not_others: {
+      '4': '4 is the single maximum element, but extending it to [4, -1, 2, 1] yields a higher sum of 6.',
+      '5': 'Summing only [4, -1, 2] gives 5, but including the next element 1 increases the sum to 6.',
+      '7': 'No contiguous subsegment sums to 7 without including penalties from negative values.',
+    },
+    concept: "Kadane's Algorithm & Dynamic Programming",
+    skill: 'Algorithms',
+    recommended_next: "Kadane's Algorithm with Circular Subarrays",
+    xp_reward: 65,
+  },
+  {
+    id: 'dsa_04',
+    category: 'dsa',
+    topic: 'Trees & BST',
+    subtopic: 'Binary Search Tree',
+    type: 'true_false',
+    difficulty: 'Easy',
+    question: 'True or False: An in-order traversal of a valid Binary Search Tree (BST) visits nodes in strictly non-decreasing sorted order.',
+    options: ['True', 'False'],
+    correct_answer: 'True',
+    why: 'By BST definition, left subtrees contain values smaller than the root, and right subtrees contain values greater. In-order traversal visits Left → Root → Right recursively, naturally reading keys in ascending sorted order.',
+    why_not_others: {
+      'False': 'Pre-order (Root → Left → Right) and post-order traversals are unsorted, but in-order traversal of a valid BST is guaranteed to produce sorted elements.',
+    },
+    concept: 'BST Invariant & Tree Traversal',
+    skill: 'Binary Trees',
+    recommended_next: 'Validate Binary Search Tree (LeetCode 98)',
+    xp_reward: 45,
+  },
+  {
+    id: 'dsa_05',
+    category: 'dsa',
+    topic: 'Graphs',
+    subtopic: 'Shortest Path',
+    type: 'mcq',
+    difficulty: 'Hard',
+    question: "Which algorithm finds the single-source shortest path on a weighted graph with non-negative edge weights in O((V + E) log V) time?",
+    options: ["Bellman-Ford Algorithm", "Dijkstra's Algorithm with Min-Heap", "Floyd-Warshall Algorithm", "Breadth-First Search (BFS)"],
+    correct_answer: "Dijkstra's Algorithm with Min-Heap",
+    why: "Dijkstra's algorithm using an indexed priority queue (min-heap) extracts the minimum tentative distance node in O(log V) time and relaxes edges in O(E log V) total time, achieving O((V + E) log V).",
+    why_not_others: {
+      'Bellman-Ford Algorithm': 'Bellman-Ford handles negative weights but runs in O(V * E) time, which is substantially slower for non-negative graphs.',
+      'Floyd-Warshall Algorithm': 'Floyd-Warshall finds all-pairs shortest paths in cubic O(V^3) time.',
+      'Breadth-First Search (BFS)': 'Standard BFS only finds shortest paths on unweighted graphs or graphs with uniform edge weights.',
+    },
+    concept: 'Greedy Graph Optimization',
+    skill: 'Graph Algorithms',
+    recommended_next: 'A* Search and Bellman-Ford Algorithm',
+    xp_reward: 75,
+  },
+
+  // ─── 2. PROGRAMMING QUESTIONS ────────────────────────────────────────────────
+  {
+    id: 'prog_01',
+    category: 'programming',
+    topic: 'Python',
+    subtopic: 'Mutability & Memory',
+    type: 'code_output',
+    difficulty: 'Medium',
+    question: 'What is the output of the following Python snippet?',
+    code_snippet: `def append_item(val, lst=[]):
+    lst.append(val)
+    return lst
+
+print(append_item(1))
+print(append_item(2))`,
+    options: ['[1] and [2]', '[1] and [1, 2]', 'TypeError: Default argument must be immutable', '[1, 2] and [1, 2]'],
+    correct_answer: '[1] and [1, 2]',
+    why: 'In Python, default parameter expressions are evaluated once at function definition time, not at call time. The mutable list `lst` persists across invocations on the function object, retaining 1 when called the second time.',
+    why_not_others: {
+      '[1] and [2]': 'This would only occur if the default argument were rebound to a new empty list on every function call (e.g., using `lst=None`).',
+      'TypeError: Default argument must be immutable': 'Python allows mutable default arguments without syntax or runtime type errors, though it is considered an anti-pattern.',
+      '[1, 2] and [1, 2]': 'The first call executes before 2 is ever appended, producing only [1] in the first print statement.',
+    },
+    concept: 'Default Parameter Binding in Python',
+    skill: 'Python Internals',
+    recommended_next: 'Python Memory Model and Garbage Collection',
+    xp_reward: 55,
+  },
+  {
+    id: 'prog_02',
+    category: 'programming',
+    topic: 'JavaScript',
+    subtopic: 'Event Loop & Promises',
+    type: 'code_output',
+    difficulty: 'Hard',
+    question: 'What is the exact execution order printed to the console?',
+    code_snippet: `console.log('1');
+setTimeout(() => console.log('2'), 0);
+Promise.resolve().then(() => console.log('3'));
+console.log('4');`,
+    options: ['1, 2, 3, 4', '1, 4, 2, 3', '1, 4, 3, 2', '3, 1, 4, 2'],
+    correct_answer: '1, 4, 3, 2',
+    why: "Synchronous code runs first ('1', '4'). Next, the microtask queue (Promises) is drained completely before rendering or processing macrotasks ('3'). Finally, the timer macrotask is executed ('2').",
+    why_not_others: {
+      '1, 2, 3, 4': 'setTimeout has a macrotask delay; it never interrupts synchronous execution.',
+      '1, 4, 2, 3': 'Microtasks scheduled by Promise.then() have strictly higher execution priority over setTimeout macrotasks.',
+      '3, 1, 4, 2': 'Promise callbacks execute asynchronously after the current synchronous call stack clears.',
+    },
+    concept: 'Microtask vs Macrotask Event Loop',
+    skill: 'JavaScript Asynchrony',
+    recommended_next: 'Async/Await and Generator execution pipelines',
+    xp_reward: 70,
+  },
+  {
+    id: 'prog_03',
+    category: 'programming',
+    topic: 'C++ / OOP',
+    subtopic: 'Polymorphism & Virtual Functions',
+    type: 'mcq',
+    difficulty: 'Medium',
+    question: 'In C++, what mechanism enables runtime dynamic dispatch (late binding) for overridden methods?',
+    options: ['Function Overloading', 'Vtable and Vptr', 'Template Metaprogramming', 'Friend Functions'],
+    correct_answer: 'Vtable and Vptr',
+    why: 'When a class declares a `virtual` member function, the compiler constructs a Virtual Method Table (vtable) and inserts a hidden pointer (vptr) into every object instance pointing to the appropriate function address resolved at runtime.',
+    why_not_others: {
+      'Function Overloading': 'Function overloading is static compile-time polymorphism determined by parameter signatures.',
+      'Template Metaprogramming': 'Templates are instantiated and resolved entirely at compile time.',
+      'Friend Functions': 'Friend functions grant access to private/protected members without polymorphic dispatch.',
+    },
+    concept: 'Dynamic Polymorphism & Memory Layout',
+    skill: 'Object-Oriented Design',
+    recommended_next: 'Virtual Destructors and Pure Virtual Interfaces',
+    xp_reward: 60,
+  },
+
+  // ─── 3. SQL & DBMS QUESTIONS ────────────────────────────────────────────────
+  {
+    id: 'sql_01',
+    category: 'sql_dbms',
+    topic: 'SQL Joins',
+    subtopic: 'LEFT JOIN',
+    type: 'mcq',
+    difficulty: 'Easy',
+    question: 'Which SQL JOIN retrieves all rows from Table A, along with matching rows from Table B, placing NULL values where no match exists?',
+    options: ['INNER JOIN', 'LEFT OUTER JOIN', 'CROSS JOIN', 'FULL OUTER JOIN'],
+    correct_answer: 'LEFT OUTER JOIN',
+    why: 'A LEFT (OUTER) JOIN preserves every record from the left table (A) regardless of whether a matching record exists in the right table (B), filling missing right-side attributes with NULL.',
+    why_not_others: {
+      'INNER JOIN': 'INNER JOIN strictly drops rows that have no corresponding match in both tables.',
+      'CROSS JOIN': 'CROSS JOIN produces the Cartesian product (A x B) pairing every row of A with every row of B.',
+      'FULL OUTER JOIN': 'FULL OUTER JOIN preserves unmatched rows from both Table A AND Table B.',
+    },
+    concept: 'Relational Algebra & Set Joins',
+    skill: 'Database Queries',
+    recommended_next: 'SQL Window Functions (ROW_NUMBER, RANK, DENSE_RANK)',
+    xp_reward: 50,
+  },
+  {
+    id: 'sql_02',
+    category: 'sql_dbms',
+    topic: 'Transactions & ACID',
+    subtopic: 'Isolation Levels',
+    type: 'mcq',
+    difficulty: 'Hard',
+    question: 'Which transaction phenomenon is prevented under REPEATABLE READ isolation level in standard SQL, but might still allow Phantom Reads?',
+    options: ['Dirty Read and Non-Repeatable Read', 'Lost Update only', 'Deadlock', 'Cascading Rollback'],
+    correct_answer: 'Dirty Read and Non-Repeatable Read',
+    why: 'REPEATABLE READ guarantees that any data row read during a transaction will return identical values if re-read, preventing Dirty Reads (uncommitted changes) and Non-Repeatable Reads (committed updates). However, newly inserted rows matching a range query (Phantom Reads) can still occur in ANSI standard isolation.',
+    why_not_others: {
+      'Lost Update only': 'READ COMMITTED already prevents dirty reads; REPEATABLE READ provides stronger snapshot isolation guarantees.',
+      'Deadlock': 'Isolation levels regulate concurrency anomalies, not deadlock prevention; deadlocks can still occur.',
+      'Cascading Rollback': 'Strict write locking prevents cascading rollbacks at basic concurrency levels.',
+    },
+    concept: 'ACID Concurrency Anomalies',
+    skill: 'DBMS Architecture',
+    recommended_next: 'Write-Ahead Logging (WAL) and B-Tree Indexing',
+    xp_reward: 70,
+  },
+
+  // ─── 4. APTITUDE QUESTIONS ──────────────────────────────────────────────────
+  {
+    id: 'apt_01',
+    category: 'aptitude',
+    topic: 'Quantitative Aptitude',
+    subtopic: 'Speed, Time & Distance',
+    type: 'mcq',
+    difficulty: 'Easy',
+    question: 'A train 180 meters long is traveling at 54 km/h. How many seconds will it take to pass a stationary pole?',
+    options: ['10 seconds', '12 seconds', '15 seconds', '18 seconds'],
+    correct_answer: '12 seconds',
+    why: 'First convert speed to meters per second: 54 km/h = 54 * (5/18) = 15 m/s. The distance covered to pass a point pole is the length of the train (180m). Time = Distance / Speed = 180 / 15 = 12 seconds.',
+    why_not_others: {
+      '10 seconds': '180 / 18 = 10s would occur if speed were mistakenly calculated as 18 m/s.',
+      '15 seconds': '15 is the speed in m/s, not the time in seconds.',
+      '18 seconds': '180 / 10 = 18s is based on an incorrect conversion coefficient.',
+    },
+    concept: 'Unit Dimensional Conversion & Relative Speed',
+    skill: 'Quantitative Ability',
+    recommended_next: 'Trains passing moving objects and platforms',
+    xp_reward: 50,
+  },
+  {
+    id: 'apt_02',
+    category: 'aptitude',
+    topic: 'Probability & Combinatorics',
+    subtopic: 'Combinations',
+    type: 'mcq',
+    difficulty: 'Medium',
+    question: 'In how many ways can a committee of 3 engineers be selected from a pool of 5 software developers and 4 QA engineers if the committee must include at least 1 QA engineer?',
+    options: ['74 ways', '84 ways', '64 ways', '54 ways'],
+    correct_answer: '74 ways',
+    why: 'Total ways to pick 3 people out of 9 without restrictions = 9C3 = (9 * 8 * 7) / (3 * 2 * 1) = 84. The prohibited case is selecting 0 QA engineers (all 3 from 5 developers) = 5C3 = 10. Ways with at least 1 QA = Total - Prohibited = 84 - 10 = 74 ways.',
+    why_not_others: {
+      '84 ways': '84 represents unrestricted selections without enforcing at least 1 QA engineer.',
+      '64 ways': 'Calculation error omitting one of the multi-QA configurations.',
+      '54 ways': 'Only calculates combinations with exactly 1 QA engineer (4C1 * 5C2 = 40) plus incorrect remainder.',
+    },
+    concept: 'Complementary Counting Principle',
+    skill: 'Logical Aptitude',
+    recommended_next: 'Bayes Theorem and Conditional Probability in Placements',
+    xp_reward: 60,
+  },
+
+  // ─── 5. COMPUTER SCIENCE FUNDAMENTALS ────────────────────────────────────────
+  {
+    id: 'cs_01',
+    category: 'cs_fundamentals',
+    topic: 'Operating Systems',
+    subtopic: 'Deadlock Conditions',
+    type: 'mcq',
+    difficulty: 'Medium',
+    question: "Which of the following is NOT one of Coffman's four necessary conditions for a deadlock to occur?",
+    options: ['Mutual Exclusion', 'Hold and Wait', 'Preemptive Resource Allocation', 'Circular Wait'],
+    correct_answer: 'Preemptive Resource Allocation',
+    why: "Coffman's four conditions are: 1. Mutual Exclusion, 2. Hold and Wait, 3. No Preemption (resources cannot be forcibly taken), 4. Circular Wait. 'Preemptive Resource Allocation' actively PREVENTS deadlocks by reclaiming resources.",
+    why_not_others: {
+      'Mutual Exclusion': 'At least one resource must be held in a non-shareable mode.',
+      'Hold and Wait': 'A process must be holding at least one resource while waiting for another.',
+      'Circular Wait': 'A closed chain of processes must exist where each waits for a resource held by the next.',
+    },
+    concept: 'Coffman Deadlock Invariants',
+    skill: 'Operating Systems',
+    recommended_next: "Banker's Algorithm for Deadlock Avoidance",
+    xp_reward: 55,
+  },
+  {
+    id: 'cs_02',
+    category: 'cs_fundamentals',
+    topic: 'Computer Networks',
+    subtopic: 'TCP Handshake',
+    type: 'mcq',
+    difficulty: 'Medium',
+    question: 'During a standard TCP 3-Way Handshake to establish a reliable transport connection, what is the exact packet sequence sent between Client and Server?',
+    options: [
+      'Client: SYN → Server: ACK → Client: SYN-ACK',
+      'Client: SYN → Server: SYN-ACK → Client: ACK',
+      'Client: ACK → Server: SYN → Client: ACK',
+      'Client: CONNECT → Server: ACCEPT → Client: ACK',
+    ],
+    correct_answer: 'Client: SYN → Server: SYN-ACK → Client: ACK',
+    why: 'Step 1: Client sends SYN (Synchronize sequence number). Step 2: Server responds with SYN-ACK (Synchronizing its sequence number and Acknowledging client sequence). Step 3: Client sends final ACK (Acknowledging server sequence). Connection is now established.',
+    why_not_others: {
+      'Client: SYN → Server: ACK → Client: SYN-ACK': 'The server must send SYN and ACK simultaneously in the second packet (SYN-ACK).',
+      'Client: ACK → Server: SYN → Client: ACK': 'Handshake must initiate with a SYN packet, never an ACK.',
+      'Client: CONNECT → Server: ACCEPT → Client: ACK': 'CONNECT and ACCEPT are application-level socket APIs, not TCP protocol packet flags.',
+    },
+    concept: 'Reliable Transport Layer Establishment',
+    skill: 'Computer Networks',
+    recommended_next: 'TCP Flow Control, Congestion Window & TLS 1.3 Handshake',
+    xp_reward: 60,
+  },
+
+  // ─── 6. AI & MACHINE LEARNING ───────────────────────────────────────────────
+  {
+    id: 'ai_01',
+    category: 'ai_ml',
+    topic: 'Model Evaluation',
+    subtopic: 'Precision vs Recall',
+    type: 'scenario',
+    difficulty: 'Medium',
+    question: 'In designing a machine learning model for malignant cancer tumor detection where false negatives (missing a cancer case) are catastrophic, which metric must be maximized primarily?',
+    options: ['Precision', 'Recall (Sensitivity)', 'Specificity', 'Accuracy'],
+    correct_answer: 'Recall (Sensitivity)',
+    why: 'Recall = TP / (TP + FN). When False Negatives carry fatal consequences, maximizing Recall minimizes the likelihood of misdiagnosing a sick patient as healthy.',
+    why_not_others: {
+      'Precision': 'Precision = TP / (TP + FP); maximizing Precision minimizes False Positives (useful in spam detection, not life-threatening diagnostics).',
+      'Specificity': 'Specificity measures TN / (TN + FP), assessing the true negative rate for healthy patients.',
+      'Accuracy': 'Accuracy is misleading in imbalanced healthcare datasets where 99% of patients are benign.',
+    },
+    concept: 'Type II Error Minimization & Cost Matrices',
+    skill: 'Machine Learning Evaluation',
+    recommended_next: 'ROC-AUC Curves and PR-AUC for Class Imbalance',
+    xp_reward: 65,
+  },
+  {
+    id: 'ai_02',
+    category: 'ai_ml',
+    topic: 'Deep Learning',
+    subtopic: 'Optimization & Vanishing Gradients',
+    type: 'mcq',
+    difficulty: 'Hard',
+    question: 'Why did the ReLU (Rectified Linear Unit) activation function largely replace Sigmoid and Tanh in deep hidden layers of neural networks?',
+    options: [
+      'ReLU outputs values bounded strictly between -1 and 1',
+      'ReLU has a constant gradient of 1 for positive inputs, combating the vanishing gradient problem',
+      'ReLU is smooth and infinitely differentiable across the entire real number line',
+      'ReLU prevents dead neurons under all learning rates',
+    ],
+    correct_answer: 'ReLU has a constant gradient of 1 for positive inputs, combating the vanishing gradient problem',
+    why: 'Sigmoid and Tanh saturate for large positive or negative activations, causing their derivative to approach zero and vanishing backpropagated gradients in deep networks. ReLU (f(x) = max(0, x)) has derivative 1 for x > 0, allowing gradients to propagate without decay.',
+    why_not_others: {
+      'ReLU outputs values bounded strictly between -1 and 1': 'ReLU is unbounded above [0, ∞). Tanh outputs values in [-1, 1].',
+      'ReLU is smooth and infinitely differentiable': 'ReLU has a non-differentiable sharp inflection at x = 0 (subgradient is used).',
+      'ReLU prevents dead neurons under all learning rates': 'High learning rates can push neurons into negative regimes where gradient is 0 forever (Dying ReLU problem).',
+    },
+    concept: 'Non-Saturating Activation & Gradient Flow',
+    skill: 'Deep Learning Architecture',
+    recommended_next: 'LeakyReLU, GELU and Transformer Attention Layers',
+    xp_reward: 75,
+  },
+
+  // ─── 7. HR INTERVIEW ────────────────────────────────────────────────────────
+  {
+    id: 'hr_01',
+    category: 'hr_interview',
+    topic: 'Behavioral Interviews',
+    subtopic: 'STAR Framework',
+    type: 'scenario',
+    difficulty: 'Easy',
+    question: "When answering 'Tell me about a time you resolved a major team conflict during a project deadline', what structure should your response follow for maximum hiring impact?",
+    options: [
+      'Situation → Task → Action → Result (STAR)',
+      'Problem → Blame → Solution → Apology',
+      'Code → Debug → Deploy → Document',
+      'Challenge → Argument → Escalation → Agreement',
+    ],
+    correct_answer: 'Situation → Task → Action → Result (STAR)',
+    why: 'Top tech hiring managers (Amazon, Google, Microsoft) use behavioral interviewing grounded in the STAR framework: Set the Context (Situation), Define your Responsibility (Task), Explain your personal concrete initiatives (Action), and Quantify the positive outcome (Result).',
+    why_not_others: {
+      'Problem → Blame → Solution → Apology': 'Blaming teammates or organizational culture is an instant red flag in behavioral evaluations.',
+      'Code → Debug → Deploy → Document': 'This describes an engineering workflow, not a structured interpersonal behavioral narrative.',
+      'Challenge → Argument → Escalation → Agreement': 'Focusing on arguments and management escalation demonstrates low emotional intelligence and weak conflict resolution.',
+    },
+    concept: 'Structured Behavioral Articulation',
+    skill: 'HR & Cultural Readiness',
+    recommended_next: 'Quantifying business metrics in technical behavioral answers',
+    xp_reward: 45,
+  },
+
+  // ─── 8. COMMUNICATION ───────────────────────────────────────────────────────
+  {
+    id: 'comm_01',
+    category: 'communication',
+    topic: 'Technical Articulation',
+    subtopic: 'Simplifying Complexity',
+    type: 'scenario',
+    difficulty: 'Medium',
+    question: "You need to explain why a software release is delayed to a non-technical marketing executive. Which explanation reflects the highest engineering leadership communication standard?",
+    options: [
+      "'Our multithreaded mutex locked up on memory heap segmentation faults in the POSIX pipeline.'",
+      "'We discovered a critical vulnerability during final security testing that could expose customer passwords. We are deploying a verified patch today so the launch is safe and reliable.'",
+      "'The backend team messed up the database schema migration scripts again.'",
+      "'It’s too technical to explain, but don’t worry, we are working on it.'",
+    ],
+    correct_answer: "'We discovered a critical vulnerability during final security testing that could expose customer passwords. We are deploying a verified patch today so the launch is safe and reliable.'",
+    why: 'Effective engineering communication translates technical friction into clear business impact (customer security and trust), takes proactive ownership without jargon, and provides a clear resolution timeline.',
+    why_not_others: {
+      "'Our multithreaded mutex locked up...'": 'Overwhelms non-technical stakeholders with implementation jargon without conveying business risk.',
+      "'The backend team messed up...'": 'Breaks psychological safety and displays destructive cross-functional finger-pointing.',
+      "'It’s too technical to explain...'": 'Dismissive and damages trust between engineering and executive leadership.',
+    },
+    concept: 'Executive Engineering Translation',
+    skill: 'Professional Communication',
+    recommended_next: 'Cross-functional alignment and asynchronous RFC writing',
+    xp_reward: 50,
+  },
+
+  // ─── 9. CODING CHALLENGE (DEBUGGING & OUTPUT) ───────────────────────────────
+  {
+    id: 'code_01',
+    category: 'coding_challenge',
+    topic: 'Debugging & Algorithm Tracing',
+    subtopic: 'Binary Search Edge Cases',
+    type: 'debugging',
+    difficulty: 'Hard',
+    question: 'Identify the subtle bug in this Binary Search implementation:',
+    code_snippet: `int binarySearch(vector<int>& arr, int target) {
+    int low = 0, high = arr.size() - 1;
+    while (low <= high) {
+        int mid = (low + high) / 2; // Line A
+        if (arr[mid] == target) return mid;
+        if (arr[mid] < target) low = mid + 1;
+        else high = mid - 1;
+    }
+    return -1;
+}`,
+    options: [
+      'Line A can cause 32-bit integer overflow if low + high exceeds INT_MAX',
+      'The while condition should be while (low < high)',
+      'The return value on failure should be 0 instead of -1',
+      'The index update low = mid + 1 skips elements',
+    ],
+    correct_answer: 'Line A can cause 32-bit integer overflow if low + high exceeds INT_MAX',
+    why: 'In arrays with more than 2^30 elements, (low + high) can exceed the maximum signed 32-bit integer value (2,147,483,647), overflowing to a negative number and causing an out-of-bounds crash. The correct bug-free pattern is: low + (high - low) / 2.',
+    why_not_others: {
+      'The while condition should be while (low < high)': 'If low < high were used, a single-element search (low == high) would terminate without checking the element.',
+      'The return value on failure should be 0': '0 is a valid element index in 0-indexed languages; -1 correctly signals not found.',
+      'The index update low = mid + 1 skips elements': 'Since arr[mid] is already verified not equal to target, advancing past mid is mathematically mandatory.',
+    },
+    concept: 'Integer Arithmetic Overflow Invariants',
+    skill: 'Code Debugging',
+    recommended_next: 'Bitwise shifts for midpoint: (low + high) >>> 1',
+    xp_reward: 80,
+  },
+
+  // ─── 10. BOSS CHALLENGE ─────────────────────────────────────────────────────
+  {
+    id: 'boss_dsa_01',
+    category: 'dsa',
+    topic: 'Linked Lists & Reversal',
+    subtopic: 'K-Group Reversal',
+    type: 'scenario',
+    difficulty: 'Boss',
+    question: '👑 BOSS CHALLENGE: What is the optimal time and auxiliary space complexity to reverse nodes of a linked list in k-group (LeetCode 25, Hard)?',
+    options: [
+      'Time: O(N), Space: O(1) iterative',
+      'Time: O(N log K), Space: O(K)',
+      'Time: O(N^2), Space: O(1)',
+      'Time: O(N), Space: O(N/K) recursion stack',
+    ],
+    correct_answer: 'Time: O(N), Space: O(1) iterative',
+    why: 'By verifying that k nodes exist ahead and iteratively reversing pointers in-place using dummy head pointer splicing, we visit every node exactly twice in O(N) time using O(1) extra pointer variables.',
+    why_not_others: {
+      'Time: O(N log K), Space: O(K)': 'There is no binary branching or heap required in linked list pointer reversals.',
+      'Time: O(N^2), Space: O(1)': 'Quadratic runtime is unacceptable for placement coding tests with N up to 10^5.',
+      'Time: O(N), Space: O(N/K) recursion stack': 'Recursive solutions consume call stack space proportional to N/K; the true master solution achieves strict O(1) auxiliary space.',
+    },
+    concept: 'In-Place Pointer Manipulation at Scale',
+    skill: 'Advanced DSA',
+    recommended_next: 'Defeat the Tree DP Boss Challenge',
+    xp_reward: 120,
+  },
+];

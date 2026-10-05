@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LogIn, UserPlus, Sparkles, ArrowRight, Eye, EyeOff, Mail, Lock, User, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import SkillPilotLogo from '../components/ui/SkillPilotLogo';
 
 const defaultLogin = { email: '', password: '' };
 const defaultRegister = { name: '', email: '', password: '', confirmPassword: '', college: '', targetRole: '' };
@@ -166,17 +167,8 @@ export default function Login() {
             style={{ background: 'linear-gradient(135deg, rgba(59,130,246,0.1), rgba(139,92,246,0.06))' }}
           >
             {/* Brand */}
-            <div className="flex items-center gap-3 mb-8">
-              <div
-                className="w-10 h-10 rounded-xl flex items-center justify-center text-xl"
-                style={{ background: 'linear-gradient(135deg, #3b82f6, #06b6d4)' }}
-              >
-                🎓
-              </div>
-              <div>
-                <div className="text-sm font-black text-white tracking-wide">SKILLPILOT</div>
-                <div className="text-[10px] text-blue-400 font-semibold tracking-[0.2em] uppercase">AI Career Copilot</div>
-              </div>
+            <div className="mb-8">
+              <SkillPilotLogo withText subtitle="AI CAREER COPILOT" size="lg" />
             </div>
 
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-blue-500/25 bg-blue-500/10 text-blue-300 text-xs font-semibold uppercase tracking-[0.15em] w-fit mb-6">

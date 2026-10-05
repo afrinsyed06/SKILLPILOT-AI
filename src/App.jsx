@@ -20,6 +20,7 @@ import Account from './pages/Account';
 import Login from './pages/Login';
 import QuestionArena from './pages/QuestionArena';
 import LeaderboardPage from './pages/LeaderboardPage';
+import SkillPilotLogo from './components/ui/SkillPilotLogo';
 
 // ─── Loading Screen ────────────────────────────────────────────────────────────
 function LoadingScreen() {
@@ -28,14 +29,11 @@ function LoadingScreen() {
       className="min-h-screen flex items-center justify-center"
       style={{ background: '#020817' }}
     >
-      <div className="text-center">
-        <div
-          className="w-16 h-16 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4"
-          style={{ background: 'linear-gradient(135deg, #3b82f6, #06b6d4)', boxShadow: '0 0 30px rgba(59,130,246,0.4)' }}
-        >
-          🎓
+      <div className="text-center flex flex-col items-center">
+        <div className="mb-4">
+          <SkillPilotLogo size="xl" />
         </div>
-        <div className="text-white font-bold text-xl mb-2">SKILLPILOT AI</div>
+        <div className="text-white font-bold text-xl mb-2 tracking-wide">SKILLPILOT AI</div>
         <div className="flex items-center justify-center gap-1.5">
           {[0, 1, 2].map((i) => (
             <div

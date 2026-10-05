@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useAuth } from '../../context/AuthContext';
 
 import { getUserStats } from '../../services/db';
+import SkillPilotLogo from '../ui/SkillPilotLogo';
 
 const navItems = [
   { path: '/', label: 'AI Dashboard', icon: '🏠' },
@@ -63,18 +64,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
       >
         {/* Logo */}
         <div className="p-5 border-b border-white/5">
-          <div className="flex items-center gap-3">
-            <div
-              className="w-9 h-9 rounded-xl flex items-center justify-center text-lg font-bold"
-              style={{ background: 'linear-gradient(135deg, #3b82f6, #06b6d4)' }}
-            >
-              🎓
-            </div>
-            <div>
-              <div className="text-sm font-bold text-white leading-tight">SKILLPILOT</div>
-              <div className="text-[10px] text-blue-400 font-semibold tracking-wider uppercase">AI Placement</div>
-            </div>
-          </div>
+          <SkillPilotLogo withText subtitle="AI PLACEMENT" size="md" />
         </div>
 
         {/* Student XP Card */}

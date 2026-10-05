@@ -11,6 +11,7 @@ import ProjectIntelligenceModal from '../components/features/ProjectIntelligence
 import { useAuth } from '../context/AuthContext';
 import { useNotifications } from '../context/NotificationContext';
 import { calculateProfileCompleteness } from '../utils/profileCompleteness';
+import ProfileAvatarEditor from '../components/ui/ProfileAvatarEditor';
 
 const tabs = ['Profile', 'Projects & Certs', 'Preferences', 'Notifications', 'Security', 'Privacy'];
 
@@ -122,7 +123,6 @@ export default function Account() {
     link: '',
   });
 
-  const photoRef = useRef(null);
 
   // ── Notification state from unified context ────────────────────────────────
   const {
@@ -254,16 +254,6 @@ export default function Account() {
     setEditing(false);
   };
 
-  const handlePhotoChange = (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (ev) => {
-      handleChange('profilePhoto', ev.target.result);
-      if (!editing) setEditing(true);
-    };
-    reader.readAsDataURL(file);
-  };
 
   const addSkill = (e) => {
     if (e && e.preventDefault) e.preventDefault();
@@ -324,8 +314,6 @@ export default function Account() {
     setShowAddCert(false);
   };
 
-  const initials = (form.fullName || user?.name || 'U')
-    .trim().split(/\s+/).slice(0, 2).map((w) => w[0]?.toUpperCase() || '').join('');
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6 pb-20">
@@ -403,34 +391,14 @@ export default function Account() {
         <div className="relative flex flex-wrap items-center gap-6">
           {/* Avatar */}
           <div className="relative flex-shrink-0">
-            {form.profilePhoto ? (
-              <img
-                src={form.profilePhoto}
-                alt="Profile"
-                className="w-24 h-24 rounded-2xl object-cover"
-                style={{ boxShadow: '0 0 30px rgba(59,130,246,0.4)' }}
-              />
-            ) : (
-              <div
-                className="w-24 h-24 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-3xl font-black text-white"
-                style={{ boxShadow: '0 0 30px rgba(59,130,246,0.4)' }}
-              >
-                {initials}
-              </div>
-            )}
-            {editing && (
-              <>
-                <button
-                  type="button"
-                  onClick={() => photoRef.current?.click()}
-                  className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center hover:bg-blue-400 transition-colors shadow-lg"
-                  title="Upload profile photo"
-                >
-                  <Camera size={14} className="text-white" />
-                </button>
-                <input ref={photoRef} type="file" accept="image/*" className="hidden" onChange={handlePhotoChange} />
-              </>
-            )}
+            <ProfileAvatarEditor
+              photo={form.profilePhoto || profile?.profilePhoto || ''}
+              name={form.fullName || user?.name || 'Student'}
+              size="lg"
+              onPhotoChange={(newPhoto) => {
+                handleChange('profilePhoto', newPhoto);
+              }}
+            />
           </div>
 
           <div className="flex-1 min-w-0">

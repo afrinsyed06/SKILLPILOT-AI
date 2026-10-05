@@ -5,6 +5,7 @@ import GlassCard from '../components/ui/GlassCard';
 import SkillBar from '../components/ui/SkillBar';
 import { useAuth } from '../context/AuthContext';
 import { calculatePlacementReadiness, calculateProfileCompleteness } from '../utils/profileCompleteness';
+import ProfileAvatarEditor from '../components/ui/ProfileAvatarEditor';
 
 export default function Profile() {
   const { profile, user } = useAuth();
@@ -51,25 +52,12 @@ export default function Profile() {
         />
         <div className="relative flex flex-wrap gap-6 items-center">
           {/* Avatar */}
-          <div className="relative">
-            {profile?.profilePhoto ? (
-              <img
-                src={profile.profilePhoto}
-                alt="Profile"
-                className="w-24 h-24 rounded-2xl object-cover"
-                style={{ boxShadow: '0 0 30px rgba(59,130,246,0.4)' }}
-              />
-            ) : (
-              <div
-                className="w-24 h-24 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-3xl font-bold text-white shadow-lg"
-                style={{ boxShadow: '0 0 30px rgba(59,130,246,0.4)' }}
-              >
-                {initials}
-              </div>
-            )}
-            <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center text-[10px] text-white font-bold">
-              ✓
-            </div>
+          <div className="relative flex-shrink-0">
+            <ProfileAvatarEditor
+              photo={profile?.profilePhoto || ''}
+              name={displayName}
+              size="lg"
+            />
           </div>
 
           <div className="flex-1 min-w-0">

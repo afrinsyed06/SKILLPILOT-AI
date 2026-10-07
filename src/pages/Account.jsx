@@ -12,6 +12,7 @@ import { useAuth } from '../context/AuthContext';
 import { useNotifications } from '../context/NotificationContext';
 import { calculateProfileCompleteness } from '../utils/profileCompleteness';
 import ProfileAvatarEditor from '../components/ui/ProfileAvatarEditor';
+import ThemeSelector from '../components/ui/ThemeSelector';
 
 const tabs = ['Profile', 'Projects & Certs', 'Preferences', 'Notifications', 'Security', 'Privacy'];
 
@@ -1176,6 +1177,14 @@ export default function Account() {
       {/* Tab 3: Preferences */}
       {activeTab === 'Preferences' && (
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <GlassCard className="lg:col-span-2">
+            <h3 className="text-base font-bold text-white mb-1">Visual Theme &amp; Atmosphere</h3>
+            <p className="text-xs text-slate-400 mb-4">
+              Customize the look and feel of your SkillPilot AI workspace. Themes sync instantly across all pages and persist automatically.
+            </p>
+            <ThemeSelector variant="inline" />
+          </GlassCard>
+
           <GlassCard>
             <h3 className="text-base font-bold text-white mb-4">App &amp; Notification Preferences</h3>
             <div className="space-y-4">

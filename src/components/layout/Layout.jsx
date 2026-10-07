@@ -21,18 +21,18 @@ export default function Layout() {
   }, []);
 
   return (
-    <div className="flex h-screen overflow-hidden" style={{ background: '#020817' }}>
+    <div className="flex h-screen overflow-hidden transition-colors duration-300" style={{ background: 'var(--bg-primary, #080718)' }}>
       {/* Grid background */}
-      <div className="fixed inset-0 grid-bg pointer-events-none z-0" />
+      <div className="fixed inset-0 grid-bg pointer-events-none z-0 opacity-70" />
 
       {/* Ambient glow */}
       <div
-        className="fixed top-0 left-1/4 w-96 h-96 rounded-full pointer-events-none z-0"
-        style={{ background: 'radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%)' }}
+        className="fixed top-0 left-1/4 w-96 h-96 rounded-full pointer-events-none z-0 blur-3xl transition-all duration-700"
+        style={{ background: 'radial-gradient(circle, var(--ambient-1, rgba(168,85,247,0.14)) 0%, transparent 70%)' }}
       />
       <div
-        className="fixed bottom-0 right-1/4 w-96 h-96 rounded-full pointer-events-none z-0"
-        style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.06) 0%, transparent 70%)' }}
+        className="fixed bottom-0 right-1/4 w-96 h-96 rounded-full pointer-events-none z-0 blur-3xl transition-all duration-700"
+        style={{ background: 'radial-gradient(circle, var(--ambient-2, rgba(6,182,212,0.09)) 0%, transparent 70%)' }}
       />
 
       {/* Sidebar */}

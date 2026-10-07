@@ -58,8 +58,8 @@ export default function Sidebar({ isOpen, setIsOpen }) {
         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
         className="fixed left-0 top-0 h-full w-64 z-30 flex flex-col lg:translate-x-0 lg:static lg:z-auto"
         style={{
-          background: 'linear-gradient(180deg, #0a1628 0%, #060e1c 100%)',
-          borderRight: '1px solid rgba(255,255,255,0.06)',
+          background: 'var(--sidebar-bg, linear-gradient(180deg, #100d27 0%, #080616 100%))',
+          borderRight: '1px solid var(--border-color, rgba(255,255,255,0.06))',
         }}
       >
         {/* Logo */}
@@ -68,7 +68,13 @@ export default function Sidebar({ isOpen, setIsOpen }) {
         </div>
 
         {/* Student XP Card */}
-        <div className="mx-3 mt-4 p-4 rounded-xl" style={{ background: 'linear-gradient(135deg, rgba(59,130,246,0.15), rgba(6,182,212,0.08))', border: '1px solid rgba(59,130,246,0.2)' }}>
+        <div
+          className="mx-3 mt-4 p-4 rounded-xl transition-all duration-300"
+          style={{
+            background: 'var(--bg-card, rgba(59,130,246,0.15))',
+            border: '1px solid var(--border-color, rgba(59,130,246,0.2))',
+          }}
+        >
           <div className="flex items-center gap-3 mb-3">
             {profile?.profilePhoto ? (
               <img

@@ -58,12 +58,13 @@ export default function Sidebar({ isOpen, setIsOpen }) {
         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
         className="fixed left-0 top-0 h-full w-64 z-30 flex flex-col lg:translate-x-0 lg:static lg:z-auto"
         style={{
-          background: 'var(--sidebar-bg, linear-gradient(180deg, #100d27 0%, #080616 100%))',
-          borderRight: '1px solid var(--border-color, rgba(255,255,255,0.06))',
+          background: 'linear-gradient(180deg, #ffffff 0%, #f0f4ff 100%)',
+          borderRight: '1px solid rgba(37,99,235,0.12)',
+          boxShadow: '2px 0 16px rgba(37,99,235,0.06)',
         }}
       >
         {/* Logo */}
-        <div className="p-5 border-b border-white/5">
+        <div className="p-5 border-b" style={{ borderColor: 'rgba(37,99,235,0.10)' }}>
           <SkillPilotLogo withText subtitle="AI PLACEMENT" size="md" />
         </div>
 
@@ -71,8 +72,8 @@ export default function Sidebar({ isOpen, setIsOpen }) {
         <div
           className="mx-3 mt-4 p-4 rounded-xl transition-all duration-300"
           style={{
-            background: 'var(--bg-card, rgba(59,130,246,0.15))',
-            border: '1px solid var(--border-color, rgba(59,130,246,0.2))',
+            background: 'linear-gradient(135deg, rgba(37,99,235,0.08), rgba(14,165,233,0.05))',
+            border: '1px solid rgba(37,99,235,0.18)',
           }}
         >
           <div className="flex items-center gap-3 mb-3">

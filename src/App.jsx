@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { NotificationProvider } from './context/NotificationContext';
-import { ThemeProvider } from './context/ThemeContext';
 
 import Layout from './components/layout/Layout';
 import Dashboard from './pages/Dashboard';
@@ -28,13 +27,13 @@ function LoadingScreen() {
   return (
     <div
       className="min-h-screen flex items-center justify-center"
-      style={{ background: '#020817' }}
+      style={{ background: '#f0f4ff' }}
     >
       <div className="text-center flex flex-col items-center">
         <div className="mb-4">
           <SkillPilotLogo size="xl" />
         </div>
-        <div className="text-white font-bold text-xl mb-2 tracking-wide">SKILLPILOT AI</div>
+        <div className="font-bold text-xl mb-2 tracking-wide" style={{ color: '#0f172a' }}>SKILLPILOT AI</div>
         <div className="flex items-center justify-center gap-1.5">
           {[0, 1, 2].map((i) => (
             <div
@@ -126,9 +125,7 @@ export default function App() {
     <BrowserRouter>
       <AuthProvider>
         <NotificationProvider>
-          <ThemeProvider>
-            <AppRoutes />
-          </ThemeProvider>
+          <AppRoutes />
         </NotificationProvider>
       </AuthProvider>
     </BrowserRouter>

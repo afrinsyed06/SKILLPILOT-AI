@@ -3,7 +3,6 @@ import { Menu, Bell, Search, Zap, LogOut, User, Settings, ChevronDown, X, Check,
 import { useState, useRef, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useNotifications } from '../../context/NotificationContext';
-import ThemeSelector from '../ui/ThemeSelector';
 
 const pageNames = {
   '/': 'AI Dashboard',
@@ -77,11 +76,12 @@ export default function Topbar({ onMenuClick, onSearchClick }) {
 
   return (
     <header
-      className="h-16 flex items-center justify-between px-4 md:px-6 sticky top-0 z-20 transition-colors duration-300"
+      className="h-16 flex items-center justify-between px-4 md:px-6 sticky top-0 z-20"
       style={{
-        background: 'var(--topbar-bg, rgba(13,10,31,0.92))',
+        background: 'rgba(255,255,255,0.95)',
         backdropFilter: 'blur(20px)',
-        borderBottom: '1px solid var(--border-color, rgba(255,255,255,0.06))',
+        borderBottom: '1px solid rgba(37,99,235,0.12)',
+        boxShadow: '0 1px 12px rgba(37,99,235,0.07)',
       }}
     >
       {/* Left: menu + page title */}
@@ -159,8 +159,6 @@ export default function Topbar({ onMenuClick, onSearchClick }) {
           <span className="text-xs font-semibold text-blue-400">AI Active</span>
         </button>
 
-        {/* 🎨 Theme Selector */}
-        <ThemeSelector variant="dropdown" />
 
         {/* 🔔 Notifications */}
         <div className="relative" ref={notifRef}>

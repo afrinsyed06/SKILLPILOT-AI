@@ -81,56 +81,56 @@ export default function CareerTimeline() {
   const completedCount = milestones.filter((m) => m.completed).length;
 
   return (
-    <GlassCard className="relative overflow-hidden border border-white/10">
-      <div className="flex flex-wrap items-center justify-between gap-3 mb-6 pb-4 border-b border-white/10">
+    <GlassCard className="relative overflow-hidden border border-blue-100 bg-white shadow-sm">
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-6 pb-4 border-b border-slate-100">
         <div>
           <div className="flex items-center gap-2">
-            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider text-cyan-400 bg-cyan-500/10 border border-cyan-500/20">
+            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider text-blue-700 bg-blue-50 border border-blue-200">
               PROGRESSION JOURNEY
             </span>
-            <h3 className="text-lg font-bold text-white flex items-center gap-2">
-              <Calendar size={18} className="text-cyan-400" /> Career Progression Timeline
+            <h3 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <Calendar size={18} className="text-blue-600" /> Career Progression Timeline
             </h3>
           </div>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-500 mt-1">
             Chronological log of verified career milestones and placement milestones.
           </p>
         </div>
 
-        <div className="text-xs font-semibold text-slate-300 bg-white/4 px-3 py-1.5 rounded-xl border border-white/8">
-          Milestones: <span className="text-cyan-300 font-bold">{completedCount}</span> / {milestones.length}
+        <div className="text-xs font-semibold text-slate-700 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200">
+          Milestones: <span className="text-blue-700 font-bold">{completedCount}</span> / {milestones.length}
         </div>
       </div>
 
-      <div className="relative pl-6 space-y-6 before:content-[''] before:absolute before:left-2.5 before:top-2 before:bottom-2 before:w-0.5 before:bg-white/10">
+      <div className="relative pl-6 space-y-6 before:content-[''] before:absolute before:left-2.5 before:top-2 before:bottom-2 before:w-0.5 before:bg-blue-200">
         {milestones.map((m, idx) => (
           <div key={idx} className="relative flex items-start gap-4 group">
             {/* Timeline Dot */}
             <div
               className={`absolute -left-6 top-1 w-5 h-5 rounded-full border-2 flex items-center justify-center text-[10px] ${
                 m.completed
-                  ? 'bg-cyan-500 border-cyan-300 text-black shadow-md shadow-cyan-500/40'
-                  : 'bg-slate-900 border-slate-700 text-slate-500'
+                  ? 'bg-blue-600 border-blue-400 text-white shadow-sm font-bold'
+                  : 'bg-slate-100 border-slate-300 text-slate-500'
               }`}
             >
               {m.completed ? '✓' : idx + 1}
             </div>
 
-            <div className="flex-1 p-3.5 rounded-2xl bg-white/3 border border-white/6 group-hover:bg-white/5 transition-all">
+            <div className="flex-1 p-3.5 rounded-2xl bg-white border border-slate-200 group-hover:border-blue-300 group-hover:bg-blue-50/20 shadow-sm transition-all">
               <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
                 <div className="flex items-center gap-2">
                   <span className="text-base">{m.icon}</span>
-                  <h4 className={`text-xs md:text-sm font-bold ${m.completed ? 'text-white' : 'text-slate-400'}`}>
+                  <h4 className={`text-xs md:text-sm font-bold ${m.completed ? 'text-slate-900' : 'text-slate-500'}`}>
                     {m.title}
                   </h4>
                 </div>
                 <span className={`text-[10px] font-semibold px-2 py-0.5 rounded ${
-                  m.completed ? 'bg-emerald-500/15 text-emerald-300' : 'bg-white/5 text-slate-500'
+                  m.completed ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-500'
                 }`}>
                   {m.date}
                 </span>
               </div>
-              <p className="text-xs text-slate-400 leading-relaxed">
+              <p className="text-xs text-slate-600 leading-relaxed">
                 {m.desc}
               </p>
 
@@ -138,7 +138,7 @@ export default function CareerTimeline() {
                 <div className="mt-2.5">
                   <Link
                     to={m.actionPath}
-                    className="inline-flex items-center gap-1 text-xs font-semibold text-cyan-400 hover:text-cyan-300"
+                    className="inline-flex items-center gap-1 text-xs font-bold text-blue-600 hover:text-blue-700"
                   >
                     {m.actionText} <ArrowRight size={11} />
                   </Link>

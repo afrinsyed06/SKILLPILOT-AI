@@ -26,24 +26,24 @@ export default function ReadinessHeatmap() {
   };
 
   return (
-    <GlassCard className="relative overflow-hidden border border-white/10">
-      <div className="flex flex-wrap items-center justify-between gap-3 mb-5 pb-3 border-b border-white/10">
+    <GlassCard className="relative overflow-hidden border border-blue-100 bg-white shadow-sm">
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-5 pb-3 border-b border-slate-100">
         <div>
           <div className="flex items-center gap-2">
-            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 border border-emerald-500/20">
+            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider text-emerald-800 bg-emerald-50 border border-emerald-200">
               AUDIT MATRIX
             </span>
-            <h3 className="text-lg font-bold text-white flex items-center gap-2">
-              <Activity size={18} className="text-emerald-400" /> Placement Readiness Heatmap
+            <h3 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <Activity size={18} className="text-emerald-600" /> Placement Readiness Heatmap
             </h3>
           </div>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-500 mt-1">
             Data Trust Architecture: Scores reflect only actual student-submitted evidence.
           </p>
         </div>
 
-        <div className="flex items-center gap-2 text-xs text-slate-400 bg-white/4 px-3 py-1.5 rounded-xl border border-white/8">
-          <ShieldCheck size={14} className="text-emerald-400" />
+        <div className="flex items-center gap-2 text-xs text-slate-600 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200">
+          <ShieldCheck size={14} className="text-emerald-600" />
           <span>Zero Synthetic Bias</span>
         </div>
       </div>
@@ -56,15 +56,15 @@ export default function ReadinessHeatmap() {
 
           // Color scale
           const colorLevel =
-            score >= 80 ? 'border-emerald-500/40 bg-emerald-500/10' :
-            score >= 65 ? 'border-blue-500/40 bg-blue-500/10' :
-            score > 0 ? 'border-amber-500/40 bg-amber-500/10' :
-            'border-white/5 bg-white/2';
+            score >= 80 ? 'border-emerald-200 bg-emerald-50/60' :
+            score >= 65 ? 'border-blue-200 bg-blue-50/60' :
+            score > 0 ? 'border-amber-200 bg-amber-50/60' :
+            'border-slate-200 bg-slate-50/40';
 
           return (
             <div
               key={pillar.id}
-              className={`p-3.5 rounded-2xl border transition-all flex flex-col justify-between ${colorLevel}`}
+              className={`p-3.5 rounded-2xl border transition-all flex flex-col justify-between shadow-sm ${colorLevel}`}
             >
               <div>
                 <div className="flex items-center justify-between text-base mb-2">
@@ -77,7 +77,7 @@ export default function ReadinessHeatmap() {
                     {pillar.trustStatus}
                   </span>
                 </div>
-                <div className="text-xs font-bold text-white leading-tight mb-1 truncate" title={pillar.name}>
+                <div className="text-xs font-bold text-slate-900 leading-tight mb-1 truncate" title={pillar.name}>
                   {pillar.name}
                 </div>
               </div>
@@ -85,8 +85,8 @@ export default function ReadinessHeatmap() {
               <div className="mt-3">
                 {isProvided ? (
                   <div>
-                    <div className="text-2xl font-extrabold text-white">{pillar.score}%</div>
-                    <div className="h-1 bg-white/10 rounded-full mt-1.5 overflow-hidden">
+                    <div className="text-2xl font-extrabold text-slate-900">{pillar.score}%</div>
+                    <div className="h-1.5 bg-slate-200 rounded-full mt-1.5 overflow-hidden">
                       <div
                         className="h-full rounded-full"
                         style={{
@@ -98,11 +98,11 @@ export default function ReadinessHeatmap() {
                   </div>
                 ) : (
                   <div className="text-center py-2">
-                    <div className="text-[11px] text-amber-400/90 font-medium">Pending Data</div>
+                    <div className="text-[11px] text-amber-700 font-medium">Pending Data</div>
                     <Link
                       to="/account"
                       state={{ edit: true }}
-                      className="text-[10px] text-cyan-400 hover:underline font-semibold mt-0.5 inline-block"
+                      className="text-[10px] text-blue-600 hover:underline font-semibold mt-0.5 inline-block"
                     >
                       + Add Now
                     </Link>
@@ -116,20 +116,20 @@ export default function ReadinessHeatmap() {
 
       {/* AI Diagnostic Opportunity Insight Banner */}
       <div
-        className="p-4 rounded-2xl flex items-start gap-3 border"
+        className="p-4 rounded-2xl flex items-start gap-3 border shadow-sm"
         style={{
-          background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(6, 182, 212, 0.05))',
+          background: 'linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%)',
           borderColor: 'rgba(59, 130, 246, 0.25)',
         }}
       >
-        <div className="w-8 h-8 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center flex-shrink-0 mt-0.5">
+        <div className="w-8 h-8 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center flex-shrink-0 mt-0.5 border border-blue-200">
           <Sparkles size={16} />
         </div>
         <div className="flex-1">
-          <div className="text-xs font-bold text-blue-300 uppercase tracking-wider mb-0.5">
+          <div className="text-xs font-bold text-blue-900 uppercase tracking-wider mb-0.5">
             AI Placement Strategic Diagnosis
           </div>
-          <p className="text-xs text-slate-200 leading-relaxed">
+          <p className="text-xs text-slate-700 leading-relaxed">
             {opportunityInsight}
           </p>
         </div>

@@ -60,10 +60,10 @@ function ProfileField({
         autoComplete={autoComplete}
         className={`w-full min-w-0 px-4 py-2.5 rounded-xl text-sm transition-all box-border outline-none ${
           disabled || readOnly
-            ? 'border border-white/5 bg-[#070e1a] text-slate-400 cursor-not-allowed'
+            ? 'border border-slate-200 bg-slate-100 text-slate-500 cursor-not-allowed'
             : isEditing
-            ? 'border-2 border-blue-500/60 bg-[#0d1c33] text-white placeholder-slate-500 focus:border-blue-400 focus:bg-[#0f2444] shadow-[0_0_0_3px_rgba(59,130,246,0.15)]'
-            : 'border border-white/10 bg-[#0a1526] text-slate-200 placeholder-slate-600 hover:border-white/20 focus:border-blue-500/50'
+            ? 'border-2 border-blue-500 bg-blue-50/50 text-slate-900 placeholder-slate-400 focus:border-blue-600 focus:bg-white shadow-sm'
+            : 'border border-slate-200 bg-white text-slate-800 placeholder-slate-400 hover:border-blue-300 focus:border-blue-500 shadow-sm'
         } ${className}`}
       />
     </div>

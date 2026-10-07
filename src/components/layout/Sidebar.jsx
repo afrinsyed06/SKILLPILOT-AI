@@ -89,15 +89,15 @@ export default function Sidebar({ isOpen, setIsOpen }) {
               </div>
             )}
             <div className="flex-1 min-w-0">
-              <div className="text-sm font-semibold text-white truncate">{displayName}</div>
-              <div className="text-xs text-slate-400">Level {level} • {targetRole}</div>
+              <div className="text-sm font-semibold text-slate-900 truncate">{displayName}</div>
+              <div className="text-xs text-slate-500">Level {level} • {targetRole}</div>
             </div>
           </div>
           <div className="flex justify-between items-center mb-1">
-            <span className="text-xs text-slate-400">{xp} / {xpToNext} XP</span>
-            <span className="text-xs text-blue-400 font-semibold">🔥 {streak}d</span>
+            <span className="text-xs text-slate-600 font-medium">{xp} / {xpToNext} XP</span>
+            <span className="text-xs text-amber-600 font-bold">🔥 {streak}d</span>
           </div>
-          <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
+          <div className="h-1.5 bg-blue-100 rounded-full overflow-hidden">
             <div
               className="h-full rounded-full"
               style={{ width: `${xpPercent}%`, background: 'linear-gradient(90deg, #3b82f6, #06b6d4)' }}
@@ -122,7 +122,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
         </nav>
 
         {/* Bottom placement score */}
-        <div className="p-4 border-t border-white/5">
+        <div className="p-4 border-t border-blue-100">
           <div className="flex items-center justify-between">
             <div>
               <div className="text-xs text-slate-500 mb-0.5">Placement Ready</div>
@@ -130,7 +130,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
             </div>
             <div className="relative w-12 h-12">
               <svg viewBox="0 0 44 44" className="w-full h-full -rotate-90">
-                <circle cx="22" cy="22" r="18" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="4" />
+                <circle cx="22" cy="22" r="18" fill="none" stroke="rgba(37,99,235,0.12)" strokeWidth="4" />
                 <circle
                   cx="22" cy="22" r="18" fill="none"
                   stroke="#3b82f6"

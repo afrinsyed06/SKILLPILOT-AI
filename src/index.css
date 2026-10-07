@@ -6,13 +6,13 @@
 
 /* ==================== WHITE & BLUE THEME ==================== */
 :root {
-  --bg-primary: #f0f4ff;
-  --bg-secondary: #e8edf9;
-  --bg-tertiary: #dce4f5;
-  --bg-card: rgba(255, 255, 255, 0.95);
-  --bg-card-hover: rgba(255, 255, 255, 1);
-  --border-color: rgba(59, 130, 246, 0.15);
-  --border-hover: rgba(59, 130, 246, 0.45);
+  --bg-primary: #f8faff;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #eff6ff;
+  --bg-card: #ffffff;
+  --bg-card-hover: #ffffff;
+  --border-color: rgba(37, 99, 235, 0.15);
+  --border-hover: rgba(37, 99, 235, 0.45);
   --text-primary: #0f172a;
   --text-secondary: #1e3a5f;
   --text-muted: #64748b;
@@ -20,10 +20,10 @@
   --accent-secondary: #0ea5e9;
   --accent-gradient: linear-gradient(135deg, #2563eb, #0ea5e9);
   --accent-glow: rgba(37, 99, 235, 0.18);
-  --sidebar-bg: linear-gradient(180deg, #ffffff 0%, #f0f4ff 100%);
-  --topbar-bg: rgba(255, 255, 255, 0.92);
-  --ambient-1: rgba(37, 99, 235, 0.10);
-  --ambient-2: rgba(14, 165, 233, 0.07);
+  --sidebar-bg: #ffffff;
+  --topbar-bg: rgba(255, 255, 255, 0.96);
+  --ambient-1: rgba(37, 99, 235, 0.06);
+  --ambient-2: rgba(14, 165, 233, 0.04);
   --input-bg: #ffffff;
   --input-focus-border: #2563eb;
   --scrollbar-thumb: #bfdbfe;
@@ -287,15 +287,55 @@
 .text-slate-500 { color: #94a3b8 !important; }
 
 .border-white\/5  { border-color: rgba(37, 99, 235, 0.08) !important; }
+.border-white\/8  { border-color: rgba(37, 99, 235, 0.10) !important; }
 .border-white\/10 { border-color: rgba(37, 99, 235, 0.12) !important; }
 .border-white\/15 { border-color: rgba(37, 99, 235, 0.15) !important; }
 .border-white\/20 { border-color: rgba(37, 99, 235, 0.18) !important; }
 .border-white\/25 { border-color: rgba(37, 99, 235, 0.22) !important; }
 
+.bg-white\/3  { background-color: #ffffff !important; }
+.bg-white\/4  { background-color: #ffffff !important; }
 .bg-white\/5  { background-color: rgba(37, 99, 235, 0.04) !important; }
+.bg-white\/6  { background-color: rgba(37, 99, 235, 0.05) !important; }
 .bg-white\/8  { background-color: rgba(37, 99, 235, 0.06) !important; }
 .bg-white\/10 { background-color: rgba(37, 99, 235, 0.07) !important; }
 .bg-white\/15 { background-color: rgba(37, 99, 235, 0.09) !important; }
+
+/* Convert all dark cards and dark hex backgrounds to white */
+.bg-black\/20,
+.bg-black\/25,
+.bg-black\/30,
+.bg-black\/40,
+.bg-black\/50 {
+  background-color: #ffffff !important;
+  border-color: rgba(37, 99, 235, 0.12) !important;
+  color: #0f172a !important;
+}
+
+.bg-\[\#0a1526\],
+.bg-\[\#070e1a\],
+.bg-\[\#0d1c33\],
+.bg-\[\#070f1e\],
+.bg-\[\#0f2444\],
+.bg-\[\#0a1628\],
+.bg-\[\#081222\],
+.bg-\[\#091528\],
+.bg-\[\#091526\],
+.bg-\[\#0c192c\],
+.bg-\[\#0f213a\],
+.bg-\[\#081220\],
+.bg-\[\#0c182b\],
+.bg-\[\#061c20\],
+.bg-\[\#1c0d15\] {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: rgba(37, 99, 235, 0.18) !important;
+}
+
+.bg-\[\#0a1526\]::placeholder,
+.bg-\[\#0d1c33\]::placeholder {
+  color: #94a3b8 !important;
+}
 
 /* Mobile overlay darkening */
 .bg-black\/60 { background-color: rgba(15, 23, 42, 0.45) !important; }

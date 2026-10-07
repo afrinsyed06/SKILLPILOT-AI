@@ -75,31 +75,31 @@ export default function Dashboard() {
       {/* ── 1. MAIN USER EXPERIENCE: Welcome Back & Gamification Bar ── */}
       <motion.div
         variants={itemVariants}
-        className="relative overflow-hidden rounded-3xl p-6 md:p-8 border shadow-2xl"
+        className="relative overflow-hidden rounded-3xl p-6 md:p-8 border shadow-sm"
         style={{
-          background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(59, 130, 246, 0.12), rgba(15, 23, 42, 0.95))',
-          borderColor: 'rgba(6, 182, 212, 0.3)',
-          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.6)',
+          background: 'linear-gradient(135deg, #ffffff 0%, #f0f7ff 60%, #e0effe 100%)',
+          borderColor: 'rgba(37, 99, 235, 0.2)',
+          boxShadow: '0 10px 30px rgba(37, 99, 235, 0.08), 0 1px 3px rgba(0, 0, 0, 0.05)',
         }}
       >
         <div className="relative z-10 flex flex-wrap items-center justify-between gap-6">
           <div className="space-y-2">
             <div className="flex items-center gap-2">
-              <span className="px-3 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider text-cyan-300 bg-cyan-500/20 border border-cyan-500/30 flex items-center gap-1.5">
+              <span className="px-3 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider text-blue-700 bg-blue-100 border border-blue-200 flex items-center gap-1.5">
                 <Sparkles size={12} /> AI CAREER COPILOT ACTIVE
               </span>
               <span className="text-xs text-slate-400 font-semibold">•</span>
-              <span className="text-xs text-amber-400 font-bold flex items-center gap-1">
-                <Flame size={14} className="fill-current" /> {streak} Day Streak
+              <span className="text-xs text-amber-600 font-bold flex items-center gap-1">
+                <Flame size={14} className="fill-current text-amber-500" /> {streak} Day Streak
               </span>
             </div>
 
-            <h1 className="text-2xl md:text-4xl font-black text-white tracking-tight">
+            <h1 className="text-2xl md:text-4xl font-black tracking-tight" style={{ color: '#0f172a' }}>
               WELCOME BACK, <span className="gradient-text">{studentName.toUpperCase()}</span> 👋
             </h1>
 
-            <p className="text-slate-300 text-xs md:text-sm max-w-xl leading-relaxed">
-              Targeting <strong className="text-white">{targetRole}</strong>. Turn every answered question into verified skill progress and career readiness.
+            <p className="text-slate-600 text-xs md:text-sm max-w-xl leading-relaxed">
+              Targeting <strong className="text-blue-700 font-bold">{targetRole}</strong>. Turn every answered question into verified skill progress and career readiness.
             </p>
           </div>
 
@@ -113,32 +113,32 @@ export default function Dashboard() {
             </Link>
             <Link
               to="/mentor"
-              className="btn-ghost text-xs px-4 py-3 rounded-2xl font-bold flex items-center gap-1.5 border border-white/10 hover:border-white/20"
+              className="px-4 py-3 rounded-2xl font-bold flex items-center gap-1.5 border border-blue-200 bg-white text-slate-700 hover:bg-blue-50 text-xs shadow-sm transition-all"
             >
-              <Bot size={15} /> Ask Mentor
+              <Bot size={15} className="text-blue-600" /> Ask Mentor
             </Link>
           </div>
         </div>
 
         {/* ── Sub-Gamification Metrics Ribbon ── */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 pt-6 border-t border-white/10">
-          <div className="flex items-center gap-3 p-3 rounded-2xl bg-black/25 border border-white/5">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 pt-6 border-t border-blue-100">
+          <div className="flex items-center gap-3 p-3 rounded-2xl bg-white border border-blue-100 shadow-sm">
             <LevelBadge level={level} size="md" />
           </div>
 
-          <div className="p-3 rounded-2xl bg-black/25 border border-white/5 flex flex-col justify-center">
+          <div className="p-3 rounded-2xl bg-white border border-blue-100 shadow-sm flex flex-col justify-center">
             <XPBar xp={xp} currentLevel={level} />
           </div>
 
-          <div className="flex items-center justify-between p-3 rounded-2xl bg-black/25 border border-white/5">
+          <div className="flex items-center justify-between p-3 rounded-2xl bg-white border border-blue-100 shadow-sm">
             <div>
-              <div className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Overall Accuracy</div>
-              <div className="text-lg font-black text-emerald-400 font-mono">{accuracy}%</div>
+              <div className="text-[10px] text-slate-500 font-semibold uppercase tracking-wider">Overall Accuracy</div>
+              <div className="text-lg font-black text-emerald-600 font-mono">{accuracy}%</div>
             </div>
-            <div className="text-xs text-emerald-300 bg-emerald-500/15 px-2 py-1 rounded-lg">🎯 High</div>
+            <div className="text-xs text-emerald-700 bg-emerald-100 border border-emerald-200 px-2 py-1 rounded-lg font-bold">🎯 High</div>
           </div>
 
-          <div className="flex items-center justify-between p-3 rounded-2xl bg-black/25 border border-white/5">
+          <div className="flex items-center justify-between p-3 rounded-2xl bg-white border border-blue-100 shadow-sm">
             <EnergyBar current={energy} max={10} />
           </div>
         </div>
@@ -148,11 +148,11 @@ export default function Dashboard() {
       {adaptiveOpp && (
         <motion.div
           variants={itemVariants}
-          className="p-6 rounded-3xl border relative overflow-hidden bg-gradient-to-r from-amber-500/15 via-orange-500/10 to-transparent border-amber-500/35 shadow-xl"
+          className="p-6 rounded-3xl border relative overflow-hidden bg-gradient-to-r from-amber-50 via-orange-50/60 to-white border-amber-300 shadow-sm"
         >
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-start gap-4 max-w-2xl">
-              <div className="w-12 h-12 rounded-2xl bg-amber-500/20 text-amber-300 flex items-center justify-center font-bold text-2xl border border-amber-500/30 flex-shrink-0">
+              <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center font-bold text-2xl border border-amber-200 flex-shrink-0">
                 🚀
               </div>
               <div className="space-y-1">
@@ -160,15 +160,15 @@ export default function Dashboard() {
                   <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-amber-400 text-slate-950">
                     AI DETECTED AN OPPORTUNITY
                   </span>
-                  <span className="text-xs text-amber-300 font-bold">
+                  <span className="text-xs text-amber-700 font-bold">
                     Reward: +{adaptiveOpp.rewardXP} XP
                   </span>
                 </div>
-                <h3 className="text-base md:text-lg font-bold text-white">
+                <h3 className="text-base md:text-lg font-bold text-slate-900">
                   Your current {adaptiveOpp.weakTopic} accuracy ({adaptiveOpp.weakAccuracy}%) is lower than your {adaptiveOpp.strongTopic} accuracy ({adaptiveOpp.strongAccuracy}%).
                 </h3>
-                <p className="text-xs text-slate-300 leading-relaxed">
-                  Recommended Mission: <strong className="text-amber-200">{adaptiveOpp.missionTitle}</strong>. Answering targeted questions in this topic will rapidly close your placement bottleneck.
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Recommended Mission: <strong className="text-amber-800">{adaptiveOpp.missionTitle}</strong>. Answering targeted questions in this topic will rapidly close your placement bottleneck.
                 </p>
               </div>
             </div>
@@ -189,16 +189,16 @@ export default function Dashboard() {
       <motion.div variants={itemVariants} className="space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-lg md:text-xl font-black text-white flex items-center gap-2">
+            <h2 className="text-lg md:text-xl font-black text-slate-900 flex items-center gap-2">
               <span>🎯</span> WHAT DO YOU WANT TO MASTER TODAY?
             </h2>
-            <p className="text-xs text-slate-400 mt-0.5">
+            <p className="text-xs text-slate-500 mt-0.5">
               Select a category to enter the Question Arena, earn XP, and level up your topic accuracy.
             </p>
           </div>
           <Link
             to="/arena"
-            className="text-xs font-bold text-cyan-400 hover:text-cyan-300 flex items-center gap-1 transition-colors"
+            className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1 transition-colors"
           >
             <span>View Arena Modes</span>
             <ArrowRight size={14} />
@@ -211,55 +211,55 @@ export default function Dashboard() {
               key={cat.id}
               whileHover={{ scale: 1.02, y: -2 }}
               onClick={() => navigate(`/arena?category=${cat.id}&start=true`)}
-              className="p-4 rounded-2xl bg-[#0a1628] border border-white/8 hover:border-cyan-500/40 transition-all cursor-pointer flex flex-col justify-between group relative overflow-hidden"
+              className="p-4 rounded-2xl bg-white border border-blue-100 hover:border-blue-400 shadow-sm hover:shadow-md transition-all cursor-pointer flex flex-col justify-between group relative overflow-hidden"
             >
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="text-2xl">{cat.icon}</span>
                   <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded-full ${
                     cat.difficulty === 'Easy'
-                      ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/20'
+                      ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                       : cat.difficulty === 'Hard' || cat.difficulty === 'Boss'
-                      ? 'bg-rose-500/15 text-rose-400 border border-rose-500/20'
-                      : 'bg-amber-500/15 text-amber-400 border border-amber-500/20'
+                      ? 'bg-rose-50 text-rose-700 border border-rose-200'
+                      : 'bg-amber-50 text-amber-700 border border-amber-200'
                   }`}>
                     {cat.difficulty}
                   </span>
                 </div>
 
                 <div>
-                  <h4 className="font-bold text-white text-sm group-hover:text-cyan-300 transition-colors">
+                  <h4 className="font-bold text-slate-900 text-sm group-hover:text-blue-600 transition-colors">
                     {cat.name}
                   </h4>
-                  <p className="text-[11px] text-slate-400 line-clamp-2 mt-0.5 leading-relaxed">
+                  <p className="text-[11px] text-slate-500 line-clamp-2 mt-0.5 leading-relaxed">
                     {cat.description}
                   </p>
                 </div>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-white/5 space-y-2 text-[11px]">
-                <div className="flex items-center justify-between text-slate-400">
+              <div className="mt-4 pt-3 border-t border-slate-100 space-y-2 text-[11px]">
+                <div className="flex items-center justify-between text-slate-500">
                   <span>Questions:</span>
-                  <strong className="text-slate-200">{cat.questionsCompleted} solved</strong>
+                  <strong className="text-slate-800">{cat.questionsCompleted} solved</strong>
                 </div>
 
-                <div className="flex items-center justify-between text-slate-400">
+                <div className="flex items-center justify-between text-slate-500">
                   <span>Accuracy:</span>
-                  <strong className={cat.accuracy >= 70 ? 'text-emerald-400 font-bold' : cat.accuracy > 0 ? 'text-amber-400 font-bold' : 'text-slate-500'}>
+                  <strong className={cat.accuracy >= 70 ? 'text-emerald-600 font-bold' : cat.accuracy > 0 ? 'text-amber-600 font-bold' : 'text-slate-400'}>
                     {cat.accuracy > 0 ? `${cat.accuracy}%` : 'Unattempted'}
                   </strong>
                 </div>
 
-                <div className="flex items-center justify-between text-slate-400">
+                <div className="flex items-center justify-between text-slate-500">
                   <span>Mastery:</span>
                   <span className={`px-2 py-0.5 rounded-md text-[10px] font-bold ${
                     cat.masteryLevel === 'Mastered'
-                      ? 'bg-emerald-500/20 text-emerald-300'
+                      ? 'bg-emerald-100 text-emerald-800'
                       : cat.masteryLevel === 'Proficient'
-                      ? 'bg-blue-500/20 text-blue-300'
+                      ? 'bg-blue-100 text-blue-800'
                       : cat.masteryLevel === 'Learning'
-                      ? 'bg-amber-500/20 text-amber-300'
-                      : 'bg-white/5 text-slate-500'
+                      ? 'bg-amber-100 text-amber-800'
+                      : 'bg-slate-100 text-slate-500'
                   }`}>
                     {cat.masteryLevel}
                   </span>

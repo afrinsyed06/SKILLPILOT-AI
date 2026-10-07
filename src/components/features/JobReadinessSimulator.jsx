@@ -21,31 +21,31 @@ export default function JobReadinessSimulator() {
   const simulation = simulateJobReadiness(profile, selectedRole);
 
   return (
-    <GlassCard className="relative overflow-hidden border border-white/10">
+    <GlassCard className="relative overflow-hidden border border-blue-100 bg-white shadow-sm">
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4 mb-6 pb-4 border-b border-white/10">
+      <div className="flex flex-wrap items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-100">
         <div>
           <div className="flex items-center gap-2">
-            <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider text-blue-400 bg-blue-500/10 border border-blue-500/20">
+            <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider text-blue-700 bg-blue-50 border border-blue-200">
               HIRING SIMULATION
             </span>
-            <h3 className="text-lg font-bold text-white flex items-center gap-2">
-              <Target size={18} className="text-cyan-400" /> Job Readiness Simulator
+            <h3 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <Target size={18} className="text-blue-600" /> Job Readiness Simulator
             </h3>
           </div>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-500 mt-1">
             Simulates end-to-end placement hiring rounds based strictly on your verified student profile.
           </p>
         </div>
 
         {/* Role Selector */}
         <div className="flex items-center gap-2">
-          <label htmlFor="simRole" className="text-xs text-slate-400 font-medium">Target Role:</label>
+          <label htmlFor="simRole" className="text-xs text-slate-600 font-medium">Target Role:</label>
           <select
             id="simRole"
             value={selectedRole}
             onChange={(e) => setSelectedRole(e.target.value)}
-            className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-[#0a1628] border border-white/15 text-white outline-none focus:border-cyan-400"
+            className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-white border border-blue-200 text-slate-800 outline-none focus:border-blue-500 shadow-sm"
           >
             {SIMULATOR_ROLES.map((r) => (
               <option key={r} value={r}>
@@ -58,31 +58,31 @@ export default function JobReadinessSimulator() {
 
       {/* Main Readiness Gauge + Bottleneck Alert */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6 mb-6 items-center">
-        <div className="md:col-span-4 p-5 rounded-2xl bg-black/25 border border-white/8 text-center flex flex-col items-center justify-center">
-          <div className="text-4xl font-extrabold text-white mb-1">
+        <div className="md:col-span-4 p-5 rounded-2xl bg-blue-50/60 border border-blue-100 text-center flex flex-col items-center justify-center">
+          <div className="text-4xl font-extrabold text-blue-900 mb-1">
             {simulation.finalReadiness}%
           </div>
-          <div className="text-xs font-semibold uppercase tracking-wider text-cyan-300">
+          <div className="text-xs font-semibold uppercase tracking-wider text-blue-700">
             Overall Hiring Readiness
           </div>
-          <div className="text-[11px] text-slate-400 mt-1">
+          <div className="text-[11px] text-slate-500 mt-1">
             Benchmark for {selectedRole}
           </div>
-          <div className="mt-3 px-3 py-1 rounded-full text-[10px] font-bold bg-white/5 text-slate-300 border border-white/10">
+          <div className="mt-3 px-3 py-1 rounded-full text-[10px] font-bold bg-white text-slate-700 border border-blue-200 shadow-sm">
             {simulation.finalReadiness >= 75 ? '🟢 Competitive Candidate' : '🟡 Developing Candidacy'}
           </div>
         </div>
 
         {/* Weakness Diagnostic Banner */}
-        <div className="md:col-span-8 p-5 rounded-2xl bg-rose-500/10 border border-rose-500/25 flex flex-col justify-between">
+        <div className="md:col-span-8 p-5 rounded-2xl bg-rose-50 border border-rose-200 flex flex-col justify-between">
           <div>
-            <div className="flex items-center gap-2 text-xs font-bold text-rose-400 uppercase tracking-wider mb-1">
+            <div className="flex items-center gap-2 text-xs font-bold text-rose-700 uppercase tracking-wider mb-1">
               <AlertTriangle size={15} /> Primary Placement Bottleneck Detected
             </div>
-            <h4 className="text-base font-bold text-white mb-1">
-              Your biggest current weakness is: <span className="text-rose-300">{simulation.biggestWeakness.roundName}</span>
+            <h4 className="text-base font-bold text-slate-900 mb-1">
+              Your biggest current weakness is: <span className="text-rose-600">{simulation.biggestWeakness.roundName}</span>
             </h4>
-            <p className="text-xs text-slate-300 leading-relaxed mb-4">
+            <p className="text-xs text-slate-600 leading-relaxed mb-4">
               {simulation.biggestWeakness.advice}
             </p>
           </div>
@@ -99,7 +99,7 @@ export default function JobReadinessSimulator() {
 
       {/* 5-Round Simulation Breakdown */}
       <div className="space-y-3">
-        <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+        <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
           Simulated 5-Round Hiring Sequence
         </div>
 
@@ -111,30 +111,30 @@ export default function JobReadinessSimulator() {
                 key={round.roundNumber}
                 className={`p-3.5 rounded-2xl border transition-all flex flex-wrap items-center justify-between gap-3 ${
                   isPassed
-                    ? 'bg-white/3 border-white/8 hover:bg-white/5'
-                    : 'bg-rose-500/4 border-rose-500/15 hover:bg-rose-500/8'
+                    ? 'bg-slate-50/70 border-slate-200/80 hover:bg-white'
+                    : 'bg-rose-50/50 border-rose-200 hover:bg-rose-50'
                 }`}
               >
                 <div className="flex items-center gap-3 min-w-[200px]">
-                  <div className="w-8 h-8 rounded-xl bg-white/6 flex items-center justify-center text-base flex-shrink-0">
+                  <div className="w-8 h-8 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-center text-base flex-shrink-0">
                     {round.icon}
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
-                      <span className="text-xs text-slate-400 font-semibold">Round {round.roundNumber}</span>
-                      <span className="text-sm font-bold text-white">{round.name}</span>
+                      <span className="text-xs text-slate-500 font-semibold">Round {round.roundNumber}</span>
+                      <span className="text-sm font-bold text-slate-900">{round.name}</span>
                     </div>
-                    <div className="text-[11px] text-slate-400">{round.status}</div>
+                    <div className="text-[11px] text-slate-500">{round.status}</div>
                   </div>
                 </div>
 
                 {/* Score Bar */}
                 <div className="flex-1 min-w-[150px] max-w-xs">
                   <div className="flex justify-between items-center text-[10px] mb-1">
-                    <span className="text-slate-400">Score</span>
-                    <span className="font-bold text-white">{round.score}%</span>
+                    <span className="text-slate-500">Score</span>
+                    <span className="font-bold text-slate-800">{round.score}%</span>
                   </div>
-                  <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
+                  <div className="h-1.5 bg-slate-200 rounded-full overflow-hidden">
                     <div
                       className="h-full rounded-full transition-all duration-700"
                       style={{
@@ -152,8 +152,8 @@ export default function JobReadinessSimulator() {
                   to={round.actionPath}
                   className={`text-xs font-semibold px-3 py-1.5 rounded-xl border transition-all flex items-center gap-1 ${
                     isPassed
-                      ? 'border-white/10 text-slate-300 hover:text-white hover:bg-white/5'
-                      : 'border-rose-500/30 text-rose-300 bg-rose-500/10 hover:bg-rose-500/20'
+                      ? 'border-slate-200 text-slate-700 hover:text-blue-700 hover:bg-white bg-white shadow-sm'
+                      : 'border-rose-200 text-rose-700 bg-white hover:bg-rose-50 shadow-sm'
                   }`}
                 >
                   {round.actionText} <ArrowRight size={12} />
@@ -164,9 +164,9 @@ export default function JobReadinessSimulator() {
         </div>
       </div>
 
-      <div className="mt-4 pt-3 border-t border-white/6 flex items-center justify-between text-[11px] text-slate-500">
+      <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
         <div className="flex items-center gap-1.5">
-          <ShieldCheck size={12} className="text-emerald-400" />
+          <ShieldCheck size={12} className="text-emerald-600" />
           <span>Zero synthetic assumptions • Based only on provided data</span>
         </div>
         <span>Target benchmark: 70%+ per round</span>

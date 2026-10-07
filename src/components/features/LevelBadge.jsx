@@ -20,8 +20,8 @@ export default function LevelBadge({ level = 1, showTitle = true, size = 'md' })
       </motion.div>
       {showTitle && (
         <div className="leading-tight">
-          <div className="text-[10px] uppercase font-bold text-cyan-400 tracking-wider">Level {level}</div>
-          <div className="text-xs font-semibold text-white flex items-center gap-1">
+          <div className="text-[10px] uppercase font-bold text-blue-600 tracking-wider">Level {level}</div>
+          <div className="text-xs font-semibold text-slate-800 flex items-center gap-1">
             <span>{def.icon}</span> {def.title}
           </div>
         </div>

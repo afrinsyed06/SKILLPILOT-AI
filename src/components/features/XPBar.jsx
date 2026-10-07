@@ -13,22 +13,22 @@ export default function XPBar({ xp = 0, currentLevel = 1 }) {
   return (
     <div className="w-full space-y-1.5">
       <div className="flex items-center justify-between text-xs">
-        <span className="text-slate-400 font-medium flex items-center gap-1.5">
-          <Sparkles size={13} className="text-amber-400" />
-          <strong className="text-white font-mono">{xp.toLocaleString()}</strong> XP
+        <span className="text-slate-600 font-medium flex items-center gap-1.5">
+          <Sparkles size={13} className="text-amber-500" />
+          <strong className="text-slate-800 font-mono">{xp.toLocaleString()}</strong> XP
         </span>
         <span className="text-slate-500 text-[11px]">
           {nextDef.minXP - xp > 0 ? `${(nextDef.minXP - xp).toLocaleString()} XP to Level ${currentLevel + 1}` : 'Max Tier Reached!'}
         </span>
       </div>
 
-      <div className="h-2.5 w-full bg-slate-900 rounded-full overflow-hidden border border-white/5 relative">
+      <div className="h-2.5 w-full bg-blue-100/80 rounded-full overflow-hidden border border-blue-200/60 relative">
         <motion.div
           initial={{ width: 0 }}
           animate={{ width: `${percent}%` }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
           className="h-full rounded-full relative overflow-hidden"
-          style={{ background: 'linear-gradient(90deg, #8b5cf6, #3b82f6, #06b6d4)' }}
+          style={{ background: 'linear-gradient(90deg, #2563eb, #3b82f6, #06b6d4)' }}
         >
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent animate-shimmer" />
         </motion.div>

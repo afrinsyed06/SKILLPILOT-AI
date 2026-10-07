@@ -128,7 +128,7 @@ export default function QuestionArena() {
   return (
     <div className="space-y-6 max-w-5xl mx-auto pb-16">
       {/* ── Top Gamification & Navigation Bar ── */}
-      <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-2xl bg-[#070e1c] border border-white/8">
+      <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-2xl" style={{ background: '#ffffff', border: '1px solid rgba(37,99,235,0.15)', boxShadow: '0 1px 8px rgba(37,99,235,0.07)' }}>
         <div className="flex items-center gap-3">
           <button
             type="button"
@@ -139,7 +139,7 @@ export default function QuestionArena() {
             <ArrowLeft size={16} />
           </button>
           <div>
-            <h1 className="text-base font-black text-white flex items-center gap-2">
+            <h1 className="text-base font-black flex items-center gap-2" style={{ color: '#0f172a' }}>
               <span>🎮</span> QUESTION ARENA
             </h1>
             <p className="text-[11px] text-cyan-400 font-semibold tracking-wider uppercase">
@@ -171,9 +171,9 @@ export default function QuestionArena() {
 
       {/* ── Fallback Loader if questions are loading ── */}
       {isPlaying && !isFinished && questions.length === 0 && (
-        <div className="p-12 text-center rounded-3xl bg-[#091526] border border-white/8 space-y-4">
+        <div className="p-12 text-center rounded-3xl space-y-4" style={{ background: '#f0f4ff', border: '1px solid rgba(37,99,235,0.18)' }}>
           <div className="text-3xl animate-bounce">⚡</div>
-          <div className="text-white font-bold text-lg">Initializing Question Arena...</div>
+          <div className="font-bold text-lg" style={{ color: '#0f172a' }}>Initializing Question Arena...</div>
           <p className="text-xs text-slate-400">Loading tailored questions for your session...</p>
           <button
             type="button"
@@ -190,7 +190,7 @@ export default function QuestionArena() {
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="p-8 md:p-10 rounded-3xl bg-gradient-to-b from-[#0e1d35] via-[#091526] to-[#040810] border border-cyan-500/30 text-center space-y-6 shadow-2xl"
+          className="p-8 md:p-10 rounded-3xl text-center space-y-6 shadow-xl" style={{ background: 'linear-gradient(135deg, #f0f7ff, #e8f0fe)', border: '1px solid rgba(37,99,235,0.25)' }}
         >
           <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-amber-400 to-orange-500 mx-auto flex items-center justify-center text-4xl shadow-lg shadow-orange-500/40">
             🏆
@@ -200,7 +200,7 @@ export default function QuestionArena() {
             <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">
               QUIZ COMPLETED!
             </span>
-            <h2 className="text-2xl md:text-3xl font-black text-white mt-3">
+            <h2 className="text-2xl md:text-3xl font-black mt-3" style={{ color: '#0f172a' }}>
               Spectacular Performance!
             </h2>
             <p className="text-sm text-slate-400 mt-1 max-w-md mx-auto">
@@ -243,7 +243,7 @@ export default function QuestionArena() {
             <button
               type="button"
               onClick={() => setIsPlaying(false)}
-              className="px-6 py-3 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-white font-bold text-sm cursor-pointer transition-colors"
+              className="px-6 py-3 rounded-xl font-bold text-sm cursor-pointer transition-colors" style={{ background: '#f1f5f9', border: '1px solid rgba(37,99,235,0.2)', color: '#1e40af' }}
             >
               CHOOSE ANOTHER MODE
             </button>
@@ -255,13 +255,13 @@ export default function QuestionArena() {
       {!isPlaying && (
         <div className="space-y-8">
           {/* Hero Banner */}
-          <div className="p-6 md:p-8 rounded-3xl bg-gradient-to-r from-blue-600/20 via-cyan-600/10 to-transparent border border-blue-500/25 relative overflow-hidden">
+          <div className="p-6 md:p-8 rounded-3xl relative overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.10), rgba(14,165,233,0.07))', border: '1px solid rgba(37,99,235,0.2)' }}>
             <div className="relative z-10 max-w-xl space-y-2">
               <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-cyan-400/15 text-cyan-300 border border-cyan-400/30 flex items-center gap-1.5 w-fit">
                 <Sparkles size={13} />
                 TURN EVERY QUESTION INTO CAREER PROGRESS
               </span>
-              <h2 className="text-2xl md:text-3xl font-black text-white">
+              <h2 className="text-2xl md:text-3xl font-black" style={{ color: '#0f172a' }}>
                 Choose Your Arena Challenge
               </h2>
               <p className="text-sm text-slate-300 leading-relaxed">
@@ -272,7 +272,7 @@ export default function QuestionArena() {
 
           {/* ── Section 1: Choose Game Mode ── */}
           <div className="space-y-3">
-            <h3 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+            <h3 className="text-sm font-bold uppercase tracking-wider flex items-center gap-2" style={{ color: '#0f172a' }}>
               <Trophy size={16} className="text-amber-400" />
               1. SELECT GAME MODE
             </h3>
@@ -284,13 +284,14 @@ export default function QuestionArena() {
                   onClick={() => setSelectedMode(mode.id)}
                   className={`p-4 rounded-2xl border text-left transition-all cursor-pointer ${
                     selectedMode === mode.id
-                      ? 'bg-blue-500/20 border-cyan-400 shadow-lg shadow-cyan-500/20'
-                      : 'bg-[#081220] border-white/8 hover:border-white/20'
+                      ? 'border-blue-500 shadow-md'
+                      : 'hover:border-blue-300'
                   }`}
+                  style={selectedMode === mode.id ? { background: 'rgba(37,99,235,0.10)', borderColor: 'rgba(37,99,235,0.5)' } : { background: '#f8fafc', borderColor: 'rgba(37,99,235,0.12)' }}
                 >
                   <div className="text-2xl mb-1.5">{mode.icon}</div>
-                  <div className="font-bold text-white text-sm">{mode.name}</div>
-                  <div className="text-[11px] text-slate-400 mt-1">{mode.desc}</div>
+                  <div className="font-bold text-sm" style={{ color: '#0f172a' }}>{mode.name}</div>
+                  <div className="text-[11px] mt-1" style={{ color: '#64748b' }}>{mode.desc}</div>
                 </button>
               ))}
             </div>
@@ -298,7 +299,7 @@ export default function QuestionArena() {
 
           {/* ── Section 2: Choose Category ── */}
           <div className="space-y-3">
-            <h3 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+            <h3 className="text-sm font-bold uppercase tracking-wider flex items-center gap-2" style={{ color: '#0f172a' }}>
               <Target size={16} className="text-cyan-400" />
               2. SELECT TOPIC CATEGORY
             </h3>
@@ -310,13 +311,14 @@ export default function QuestionArena() {
                   onClick={() => setSelectedCategory(cat.id)}
                   className={`p-3.5 rounded-2xl border text-left transition-all cursor-pointer ${
                     selectedCategory === cat.id
-                      ? 'bg-cyan-500/20 border-cyan-400 shadow-lg shadow-cyan-500/20'
-                      : 'bg-[#081220] border-white/8 hover:border-white/20'
+                      ? 'border-blue-500 shadow-md'
+                      : 'hover:border-blue-300'
                   }`}
+                  style={selectedCategory === cat.id ? { background: 'rgba(14,165,233,0.10)', borderColor: 'rgba(37,99,235,0.5)' } : { background: '#f8fafc', borderColor: 'rgba(37,99,235,0.12)' }}
                 >
                   <div className="text-2xl mb-1">{cat.icon}</div>
-                  <div className="font-bold text-white text-xs truncate">{cat.name}</div>
-                  <div className="text-[10px] text-slate-400 mt-0.5">{cat.difficulty}</div>
+                  <div className="font-bold text-xs truncate" style={{ color: '#0f172a' }}>{cat.name}</div>
+                  <div className="text-[10px] mt-0.5" style={{ color: '#64748b' }}>{cat.difficulty}</div>
                 </button>
               ))}
             </div>

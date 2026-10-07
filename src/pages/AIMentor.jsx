@@ -113,7 +113,7 @@ export default function AIMentor() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white">
+          <h1 className="text-2xl font-bold" style={{ color: '#0f172a' }}>
             AI Career <span className="gradient-text">Mentor</span>
           </h1>
           <p className="text-sm text-slate-400 mt-1">
@@ -199,7 +199,7 @@ export default function AIMentor() {
                 }}
                 placeholder="Ask me about your career, skills, roadmap, interview prep..."
                 rows={2}
-                className="w-full resize-none rounded-2xl px-5 py-3.5 pr-14 text-sm text-white placeholder-slate-500 outline-none bg-[#0a1526] border border-white/10 focus:border-blue-400"
+                className="w-full resize-none rounded-2xl px-5 py-3.5 pr-14 text-sm text-slate-900 placeholder-slate-400 outline-none bg-white border border-blue-200 focus:border-blue-500 shadow-sm"
               />
             </div>
             <button

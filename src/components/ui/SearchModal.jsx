@@ -84,10 +84,10 @@ export default function SearchModal({ isOpen, onClose }) {
             transition={{ duration: 0.2, type: 'spring', stiffness: 400, damping: 30 }}
             onClick={(e) => e.stopPropagation()}
             className="w-full max-w-2xl rounded-2xl overflow-hidden"
-            style={{ background: '#0d1829', border: '1px solid rgba(59,130,246,0.25)', boxShadow: '0 0 60px rgba(59,130,246,0.15), 0 25px 50px rgba(0,0,0,0.5)' }}
+            style={{ background: '#ffffff', border: '1px solid rgba(37,99,235,0.25)', boxShadow: '0 4px 40px rgba(37,99,235,0.15), 0 25px 50px rgba(0,0,0,0.12)' }}
           >
             {/* Input */}
-            <div className="flex items-center gap-3 px-5 py-4 border-b border-white/8">
+            <div className="flex items-center gap-3 px-5 py-4 border-b" style={{ borderColor: 'rgba(37,99,235,0.12)' }}>
               <Search size={18} className="text-blue-400 flex-shrink-0" />
               <input
                 ref={inputRef}
@@ -95,15 +95,15 @@ export default function SearchModal({ isOpen, onClose }) {
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={handleKey}
                 placeholder="Search pages, features, modules..."
-                className="flex-1 bg-transparent text-white placeholder-slate-500 outline-none text-base"
+                className="flex-1 bg-transparent placeholder-slate-400 outline-none text-base" style={{ color: '#0f172a' }}
               />
               {query && (
-                <button onClick={() => setQuery('')} className="text-slate-500 hover:text-white transition-colors">
+                <button onClick={() => setQuery('')} className="text-slate-400 hover:text-slate-700 transition-colors">
                   <X size={16} />
                 </button>
               )}
               <kbd className="hidden sm:flex items-center gap-1 text-xs px-2 py-1 rounded-lg text-slate-500"
-                style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}>
+                style={{ background: 'rgba(37,99,235,0.07)', border: '1px solid rgba(37,99,235,0.15)' }}>
                 ESC
               </kbd>
             </div>
@@ -126,17 +126,17 @@ export default function SearchModal({ isOpen, onClose }) {
                       onClick={() => handleSelect(item.path)}
                       onMouseEnter={() => setHighlighted(i)}
                       className={`flex items-center gap-4 px-4 py-3 cursor-pointer transition-all duration-150 ${
-                        highlighted === i ? 'bg-blue-500/12' : 'hover:bg-white/3'
+                        highlighted === i ? 'bg-blue-50' : 'hover:bg-slate-50'
                       }`}
                       style={{ borderLeft: highlighted === i ? '2px solid #3b82f6' : '2px solid transparent' }}
                     >
                       <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-xl flex-shrink-0 transition-all ${
-                        highlighted === i ? 'bg-blue-500/20' : 'bg-white/5'
+                        highlighted === i ? 'bg-blue-100' : 'bg-slate-100'
                       }`}>
                         {item.icon}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className={`text-sm font-semibold ${highlighted === i ? 'text-white' : 'text-slate-300'}`}>
+                        <div className={`text-sm font-semibold ${highlighted === i ? 'text-blue-700' : 'text-slate-700'}`}>
                           {item.label}
                         </div>
                         <div className="text-xs text-slate-500 truncate">{item.desc}</div>
@@ -153,10 +153,10 @@ export default function SearchModal({ isOpen, onClose }) {
             </div>
 
             {/* Footer */}
-            <div className="px-5 py-3 border-t border-white/5 flex items-center gap-4 text-xs text-slate-600">
-              <span className="flex items-center gap-1"><kbd className="px-1.5 py-0.5 rounded bg-white/5 text-slate-500">↑↓</kbd> Navigate</span>
-              <span className="flex items-center gap-1"><kbd className="px-1.5 py-0.5 rounded bg-white/5 text-slate-500">↵</kbd> Open</span>
-              <span className="flex items-center gap-1"><kbd className="px-1.5 py-0.5 rounded bg-white/5 text-slate-500">Esc</kbd> Close</span>
+            <div className="px-5 py-3 flex items-center gap-4 text-xs text-slate-500" style={{ borderTop: '1px solid rgba(37,99,235,0.10)' }}>
+              <span className="flex items-center gap-1"><kbd className="px-1.5 py-0.5 rounded" style={{ background: 'rgba(37,99,235,0.08)', color: '#2563eb' }}>↑↓</kbd> Navigate</span>
+              <span className="flex items-center gap-1"><kbd className="px-1.5 py-0.5 rounded" style={{ background: 'rgba(37,99,235,0.08)', color: '#2563eb' }}>↵</kbd> Open</span>
+              <span className="flex items-center gap-1"><kbd className="px-1.5 py-0.5 rounded" style={{ background: 'rgba(37,99,235,0.08)', color: '#2563eb' }}>Esc</kbd> Close</span>
             </div>
           </motion.div>
         </motion.div>

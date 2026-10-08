@@ -186,27 +186,27 @@ export default function Topbar({ onMenuClick, onSearchClick }) {
           {/* Notification Panel */}
           {notifOpen && (
             <div
-              className="absolute -right-12 sm:right-0 top-full mt-2.5 w-[330px] sm:w-[380px] max-w-[calc(100vw-1.5rem)] rounded-2xl border border-white/10 z-[999] overflow-hidden shadow-2xl backdrop-blur-2xl"
-              style={{ background: 'rgba(10, 22, 40, 0.97)', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255,255,255,0.08)' }}
+              className="absolute -right-12 sm:right-0 top-full mt-2.5 w-[330px] sm:w-[380px] max-w-[calc(100vw-1.5rem)] rounded-2xl border border-blue-200 z-[999] overflow-hidden shadow-2xl backdrop-blur-2xl"
+              style={{ background: '#ffffff', boxShadow: '0 20px 45px -10px rgba(37,99,235,0.18), 0 0 0 1px rgba(37,99,235,0.12)' }}
             >
               {/* Header */}
               <div
-                className="flex items-center justify-between px-4 py-3 border-b border-white/10"
-                style={{ background: 'linear-gradient(135deg, rgba(59,130,246,0.14), rgba(6,182,212,0.07))' }}
+                className="flex items-center justify-between px-4 py-3 border-b border-blue-100"
+                style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.08), rgba(6,182,212,0.04))' }}
               >
                 <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400">
+                  <div className="w-7 h-7 rounded-lg bg-blue-100 border border-blue-200 flex items-center justify-center text-blue-600">
                     <Bell size={14} />
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
-                      <span className="text-sm font-bold text-white">Notifications</span>
+                      <span className="text-sm font-bold text-slate-900">Notifications</span>
                       {unreadCount > 0 ? (
-                        <span className="px-1.5 py-0.2 rounded-full text-[10px] font-bold text-white bg-blue-500 shadow-sm">
+                        <span className="px-1.5 py-0.2 rounded-full text-[10px] font-bold text-white bg-blue-600 shadow-sm">
                           {unreadCount} new
                         </span>
                       ) : (
-                        <span className="text-[11px] text-slate-400 font-normal">All caught up</span>
+                        <span className="text-[11px] text-slate-500 font-normal">All caught up</span>
                       )}
                     </div>
                   </div>
@@ -216,7 +216,7 @@ export default function Topbar({ onMenuClick, onSearchClick }) {
                     <button
                       onClick={markAllRead}
                       title="Mark all as read"
-                      className="p-1.5 text-xs text-blue-400 hover:text-blue-300 hover:bg-white/5 rounded-lg transition-colors flex items-center gap-1 font-medium cursor-pointer"
+                      className="p-1.5 text-xs text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-colors flex items-center gap-1 font-semibold cursor-pointer"
                     >
                       <Check size={13} />
                       <span className="text-[11px] hidden sm:inline">Mark read</span>
@@ -224,7 +224,7 @@ export default function Topbar({ onMenuClick, onSearchClick }) {
                   )}
                   <button
                     onClick={() => setNotifOpen(false)}
-                    className="p-1.5 text-slate-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors cursor-pointer"
+                    className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-blue-50 rounded-lg transition-colors cursor-pointer"
                   >
                     <X size={15} />
                   </button>
@@ -234,59 +234,59 @@ export default function Topbar({ onMenuClick, onSearchClick }) {
               {/* Notification list */}
               {notifications.length === 0 ? (
                 <div className="py-8 px-4 text-center">
-                  <div className="w-12 h-12 rounded-full bg-blue-500/10 text-blue-400 flex items-center justify-center mx-auto mb-2 text-xl">
+                  <div className="w-12 h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center mx-auto mb-2 text-xl border border-blue-100">
                     🎉
                   </div>
-                  <p className="text-sm font-semibold text-white">No notifications</p>
-                  <p className="text-xs text-slate-400 mt-1">You're all caught up with your placement alerts!</p>
+                  <p className="text-sm font-semibold text-slate-900">No notifications</p>
+                  <p className="text-xs text-slate-500 mt-1">You're all caught up with your placement alerts!</p>
                   <button
                     onClick={resetNotifications}
-                    className="mt-3 text-xs text-cyan-400 hover:underline cursor-pointer"
+                    className="mt-3 text-xs text-blue-600 hover:underline cursor-pointer font-semibold"
                   >
                     Restore sample alerts
                   </button>
                 </div>
               ) : (
-                <div className="divide-y divide-white/5 max-h-80 overflow-y-auto">
+                <div className="divide-y divide-slate-100 max-h-80 overflow-y-auto">
                   {notifications.map((n) => (
                     <div
                       key={n.id}
                       onClick={() => handleNotificationClick(n)}
-                      className={`group flex items-start gap-3 px-4 py-3 cursor-pointer transition-all hover:bg-white/8 ${
-                        n.unread ? 'bg-blue-500/8' : ''
+                      className={`group flex items-start gap-3 px-4 py-3 cursor-pointer transition-all hover:bg-blue-50/60 ${
+                        n.unread ? 'bg-blue-50/40' : 'bg-white'
                       }`}
                     >
-                      <div className="w-8 h-8 rounded-xl bg-white/6 flex items-center justify-center text-base flex-shrink-0 mt-0.5 group-hover:scale-105 transition-transform">
+                      <div className="w-8 h-8 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-base flex-shrink-0 mt-0.5 group-hover:scale-105 transition-transform">
                         {n.icon}
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between gap-1.5">
-                          <span className={`text-xs font-bold truncate ${n.unread ? 'text-white' : 'text-slate-300'}`}>
+                          <span className={`text-xs font-bold truncate ${n.unread ? 'text-slate-900' : 'text-slate-700'}`}>
                             {n.title}
                           </span>
-                          <span className="text-[10px] text-slate-500 flex-shrink-0">{n.time}</span>
+                          <span className="text-[10px] text-slate-400 flex-shrink-0">{n.time}</span>
                         </div>
-                        <p className="text-[11px] text-slate-400 mt-0.5 leading-relaxed line-clamp-2">{n.desc}</p>
+                        <p className="text-[11px] text-slate-600 mt-0.5 leading-relaxed line-clamp-2">{n.desc}</p>
                         {n.tag && (
                           <div className="flex items-center gap-1.5 mt-1.5">
-                            <span className="text-[9px] font-semibold uppercase tracking-wider px-1.5 py-0.2 rounded bg-white/6 text-slate-300">
+                            <span className="text-[9px] font-semibold uppercase tracking-wider px-1.5 py-0.2 rounded bg-blue-50 text-blue-700 border border-blue-200/60">
                               {n.tag}
                             </span>
-                            <span className="text-[10px] text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-0.5">
+                            <span className="text-[10px] text-blue-600 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-0.5 font-bold">
                               Open <ArrowRight size={10} />
                             </span>
                           </div>
                         )}
                       </div>
                       <div className="flex flex-col items-center gap-1.5 flex-shrink-0 pt-0.5">
-                        {n.unread && <div className="w-2 h-2 rounded-full bg-cyan-400 ring-2 ring-cyan-400/20" />}
+                        {n.unread && <div className="w-2 h-2 rounded-full bg-blue-600 ring-2 ring-blue-300" />}
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
                             removeNotification(n.id);
                           }}
                           title="Dismiss notification"
-                          className="opacity-0 group-hover:opacity-100 p-1 rounded text-slate-500 hover:text-red-400 hover:bg-red-500/10 transition-all cursor-pointer"
+                          className="opacity-0 group-hover:opacity-100 p-1 rounded text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-all cursor-pointer"
                         >
                           <Trash2 size={12} />
                         </button>
@@ -297,20 +297,20 @@ export default function Topbar({ onMenuClick, onSearchClick }) {
               )}
 
               {/* Footer */}
-              <div className="px-4 py-2.5 border-t border-white/8 bg-black/25 flex items-center justify-between text-xs">
+              <div className="px-4 py-2.5 border-t border-slate-100 bg-slate-50/80 flex items-center justify-between text-xs">
                 <button
                   onClick={() => {
                     setNotifOpen(false);
                     navigate('/account', { state: { tab: 'Notifications' } });
                   }}
-                  className="text-slate-400 hover:text-white transition-colors flex items-center gap-1 cursor-pointer"
+                  className="text-slate-600 hover:text-blue-600 transition-colors flex items-center gap-1 cursor-pointer font-medium"
                 >
                   <Settings size={12} /> All in Account
                 </button>
                 {notifications.length > 0 && (
                   <button
                     onClick={clearAllNotifications}
-                    className="text-slate-500 hover:text-rose-400 transition-colors cursor-pointer"
+                    className="text-slate-500 hover:text-rose-600 transition-colors cursor-pointer"
                   >
                     Clear all
                   </button>
@@ -325,7 +325,7 @@ export default function Topbar({ onMenuClick, onSearchClick }) {
           <button
             id="user-avatar-btn"
             onClick={() => setMenuOpen((v) => !v)}
-            className="flex items-center gap-2 px-2 py-1.5 rounded-xl hover:bg-white/8 transition-all duration-200"
+            className="flex items-center gap-2 px-2 py-1.5 rounded-xl hover:bg-blue-50 transition-all duration-200"
             style={{ border: menuOpen ? '1px solid rgba(59,130,246,0.3)' : '1px solid transparent' }}
           >
             {/* Avatar */}
@@ -345,23 +345,22 @@ export default function Topbar({ onMenuClick, onSearchClick }) {
             )}
             <ChevronDown
               size={14}
-              className={`text-slate-400 transition-transform duration-200 hidden sm:block ${menuOpen ? 'rotate-180' : ''}`}
+              className={`text-slate-500 transition-transform duration-200 hidden sm:block ${menuOpen ? 'rotate-180' : ''}`}
             />
           </button>
 
           {/* Dropdown — use fixed positioning relative to viewport so it never gets clipped */}
           {menuOpen && (
             <div
-              className="absolute right-0 top-full mt-2 w-56 rounded-2xl border border-white/10 overflow-hidden z-[999]"
+              className="absolute right-0 top-full mt-2 w-56 rounded-2xl border border-blue-200 overflow-hidden z-[999] bg-white shadow-2xl"
               style={{
-                background: '#0a1628',
-                boxShadow: '0 24px 48px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.06)',
+                boxShadow: '0 20px 45px -10px rgba(37,99,235,0.18), 0 0 0 1px rgba(37,99,235,0.12)',
               }}
             >
               {/* User header */}
               <div
-                className="px-4 py-3 border-b border-white/8"
-                style={{ background: 'linear-gradient(135deg, rgba(59,130,246,0.1), rgba(6,182,212,0.05))' }}
+                className="px-4 py-3 border-b border-blue-100"
+                style={{ background: 'linear-gradient(135deg, rgba(37,99,235,0.06), rgba(6,182,212,0.03))' }}
               >
                 <div className="flex items-center gap-3">
                   {profile?.profilePhoto ? (
@@ -375,10 +374,10 @@ export default function Topbar({ onMenuClick, onSearchClick }) {
                     </div>
                   )}
                   <div className="min-w-0">
-                    <div className="text-sm font-semibold text-white truncate">
+                    <div className="text-sm font-semibold text-slate-900 truncate">
                       {profile?.fullName || user?.name}
                     </div>
-                    <div className="text-[11px] text-slate-400 truncate">{user?.email}</div>
+                    <div className="text-[11px] text-slate-500 truncate">{user?.email}</div>
                   </div>
                 </div>
               </div>
@@ -388,27 +387,27 @@ export default function Topbar({ onMenuClick, onSearchClick }) {
                 <button
                   id="menu-my-profile"
                   onClick={() => { navigate('/account'); setMenuOpen(false); }}
-                  className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-300 hover:bg-white/6 hover:text-white transition-all duration-150 text-left"
+                  className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-all duration-150 text-left cursor-pointer font-medium"
                 >
-                  <User size={15} className="text-slate-500 flex-shrink-0" />
+                  <User size={15} className="text-blue-600 flex-shrink-0" />
                   My Profile
                 </button>
                 <button
                   id="menu-settings"
                   onClick={() => { navigate('/account'); setMenuOpen(false); }}
-                  className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-300 hover:bg-white/6 hover:text-white transition-all duration-150 text-left"
+                  className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-all duration-150 text-left cursor-pointer font-medium"
                 >
-                  <Settings size={15} className="text-slate-500 flex-shrink-0" />
+                  <Settings size={15} className="text-blue-600 flex-shrink-0" />
                   Settings
                 </button>
               </div>
 
               {/* Logout */}
-              <div className="border-t border-white/8">
+              <div className="border-t border-slate-100">
                 <button
                   id="menu-logout"
                   onClick={handleLogout}
-                  className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-red-400 hover:bg-red-500/10 transition-all duration-150 text-left"
+                  className="w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold text-rose-600 hover:bg-rose-50 transition-all duration-150 text-left cursor-pointer"
                 >
                   <LogOut size={15} className="flex-shrink-0" />
                   Logout

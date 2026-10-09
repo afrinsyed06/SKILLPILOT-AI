@@ -55,8 +55,12 @@ export default function QuestionArena() {
   const dailyChallenge = useMemo(() => getDailyChallenge(), []);
   const [isDailyDone, setIsDailyDone] = useState(() => isDailyChallengeCompleted(userId, dailyChallenge.date));
 
-  const initialCat = searchParams.get('category') || 'dsa';
-  const initialMode = searchParams.get('mode') || 'daily_challenge';
+  const categoryParam = searchParams.get('category');
+  const modeParam = searchParams.get('mode');
+  const initialCat = categoryParam || 'dsa';
+  // If user came with a specific category without specifying mode, default to 'skill_builder'
+  // If no category and no mode, default to 'daily_challenge'
+  const initialMode = modeParam || (categoryParam ? 'skill_builder' : 'daily_challenge');
   const shouldAutoStart = Boolean(searchParams.get('start'));
 
   const [selectedCategory, setSelectedCategory] = useState(initialCat);
@@ -64,14 +68,14 @@ export default function QuestionArena() {
   const [isPlaying, setIsPlaying] = useState(shouldAutoStart);
   const [questions, setQuestions] = useState(() => {
     if (shouldAutoStart) {
-      if (initialMode === 'daily_challenge') {
+      if (initialMode === 'daily_challenge' && (!categoryParam || categoryParam === 'all')) {
         return getDailyChallenge().questions;
       }
-      const config = ARENA_MODES.find((m) => m.id === initialMode) || ARENA_MODES[0];
+      const config = ARENA_MODES.find((m) => m.id === initialMode) || ARENA_MODES[3];
       return getQuestions({
-        category: initialCat === 'mixed_quiz' ? null : initialCat,
+        category: initialCat === 'mixed_quiz' || initialCat === 'all' ? null : initialCat,
         difficulty: initialMode === 'boss_challenge' ? 'Boss' : null,
-        limit: config.count,
+        limit: config.count || 8,
       });
     }
     return [];
@@ -91,22 +95,30 @@ export default function QuestionArena() {
   const currentModeConfig = ARENA_MODES.find((m) => m.id === selectedMode) || ARENA_MODES[0];
 
   const startQuiz = (catId = selectedCategory, modeId = selectedMode) => {
-    setSelectedMode(modeId);
+    let effectiveMode = modeId;
     let qs = [];
 
-    if (modeId === 'daily_challenge') {
+    // If a specific topic category was selected (e.g. Aptitude, Communication, Coding Challenge),
+    // ensure questions are strictly drawn from that concept rather than generic daily mix!
+    if (modeId === 'daily_challenge' && catId && catId !== 'all' && catId !== 'mixed_quiz') {
+      effectiveMode = 'skill_builder';
+    }
+
+    setSelectedMode(effectiveMode);
+
+    if (effectiveMode === 'daily_challenge') {
       const dailyData = getDailyChallenge();
       qs = dailyData.questions;
     } else {
-      const config = ARENA_MODES.find((m) => m.id === modeId) || ARENA_MODES[0];
+      const config = ARENA_MODES.find((m) => m.id === effectiveMode) || ARENA_MODES[3];
       qs = getQuestions({
-        category: catId === 'mixed_quiz' ? null : catId,
-        difficulty: modeId === 'boss_challenge' ? 'Boss' : null,
-        limit: config.count,
+        category: catId === 'mixed_quiz' || catId === 'all' ? null : catId,
+        difficulty: effectiveMode === 'boss_challenge' ? 'Boss' : null,
+        limit: config.count || 8,
       });
     }
 
-    setQuestions(qs.length > 0 ? qs : getQuestions({ limit: 5 }));
+    setQuestions(qs.length > 0 ? qs : getQuestions({ category: catId !== 'all' ? catId : null, limit: 5 }));
     setCurrentIndex(0);
     setCombo(0);
     setMultiplier(1.0);
@@ -118,10 +130,19 @@ export default function QuestionArena() {
     setIsPlaying(true);
   };
 
-  // Ensure questions load if user navigates with start=true
+  // Ensure questions load if user navigates with start=true or URL parameters change
   useEffect(() => {
-    if (searchParams.get('start') && questions.length === 0) {
-      startQuiz(initialCat, initialMode);
+    const cat = searchParams.get('category');
+    const mode = searchParams.get('mode');
+    const start = Boolean(searchParams.get('start'));
+
+    if (cat) setSelectedCategory(cat);
+    if (mode) setSelectedMode(mode);
+
+    if (start) {
+      const effMode = mode || (cat ? 'skill_builder' : 'daily_challenge');
+      const effCat = cat || 'dsa';
+      startQuiz(effCat, effMode);
     }
   }, [searchParams]);
 
@@ -226,6 +247,28 @@ export default function QuestionArena() {
               <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white border border-amber-300 text-xs font-black text-amber-700 shadow-xs">
                 <Flame size={14} className="fill-amber-500 text-amber-500" />
                 <span>Streak Protected</span>
+              </div>
+            </div>
+          )}
+
+          {/* Header indicator when in specific category concept mode */}
+          {selectedMode !== 'daily_challenge' && (
+            <div className="p-3.5 rounded-2xl bg-gradient-to-r from-blue-50 via-indigo-50 to-blue-50 border border-blue-200 flex flex-wrap items-center justify-between gap-2 shadow-xs">
+              <div className="flex items-center gap-2">
+                <span className="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center text-xs font-bold shadow-xs">
+                  {QUESTION_CATEGORIES.find((c) => c.id === selectedCategory)?.icon || '⚡'}
+                </span>
+                <div>
+                  <span className="text-xs font-black text-slate-900">
+                    CONCEPT: {QUESTION_CATEGORIES.find((c) => c.id === selectedCategory)?.name.toUpperCase() || selectedCategory.toUpperCase()} • {currentModeConfig.name}
+                  </span>
+                  <div className="text-[10px] text-slate-500 font-semibold">
+                    {QUESTION_CATEGORIES.find((c) => c.id === selectedCategory)?.description || 'Deep topic focused mastery set'}
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white border border-blue-200 text-xs font-black text-blue-700 shadow-xs">
+                <span>{questions.length} Questions in this Concept Set</span>
               </div>
             </div>
           )}
@@ -447,7 +490,12 @@ export default function QuestionArena() {
                 <button
                   key={mode.id}
                   type="button"
-                  onClick={() => setSelectedMode(mode.id)}
+                  onClick={() => {
+                    setSelectedMode(mode.id);
+                    if (mode.id === 'daily_challenge') {
+                      setSelectedCategory('all');
+                    }
+                  }}
                   className={`p-4 rounded-2xl border text-left transition-all cursor-pointer relative ${
                     selectedMode === mode.id
                       ? 'border-blue-600 shadow-md ring-2 ring-blue-500/20'
@@ -483,7 +531,12 @@ export default function QuestionArena() {
                 <button
                   key={cat.id}
                   type="button"
-                  onClick={() => setSelectedCategory(cat.id)}
+                  onClick={() => {
+                    setSelectedCategory(cat.id);
+                    if (selectedMode === 'daily_challenge') {
+                      setSelectedMode('skill_builder');
+                    }
+                  }}
                   className={`p-3.5 rounded-2xl border text-left transition-all cursor-pointer ${
                     selectedCategory === cat.id
                       ? 'border-blue-600 shadow-md ring-2 ring-blue-500/20'
@@ -511,7 +564,11 @@ export default function QuestionArena() {
               className="btn-primary flex items-center gap-3 px-10 py-4 rounded-2xl font-black text-base cursor-pointer shadow-xl shadow-blue-500/25 active:scale-95 transition-all"
             >
               <Play size={20} className="fill-current" />
-              <span>START {currentModeConfig.name.toUpperCase()} NOW</span>
+              <span>
+                {selectedMode === 'daily_challenge'
+                  ? "START TODAY'S DAILY CHALLENGE"
+                  : `START ${QUESTION_CATEGORIES.find((c) => c.id === selectedCategory)?.name.toUpperCase() || 'TOPIC'} (${currentModeConfig.name.toUpperCase()})`}
+              </span>
             </button>
           </div>
         </div>

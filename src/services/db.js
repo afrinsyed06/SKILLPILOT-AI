@@ -62,26 +62,19 @@ function setTable(name, data) {
 
 // ─── INITIALIZATION & SEEDING ────────────────────────────────────────────────
 export function initDatabase() {
-  // 1. Ensure questions table is seeded & merged with new questions
-  let questions = getTable('questions');
-  if (!questions || questions.length === 0) {
-    questions = INITIAL_QUESTIONS;
-    setTable('questions', questions);
-  } else {
-    // Merge any newly added INITIAL_QUESTIONS into the questions table
-    const existingIds = new Set(questions.map((q) => q.id));
-    const newQuestions = INITIAL_QUESTIONS.filter((q) => !existingIds.has(q.id));
-    if (newQuestions.length > 0) {
-      questions = [...questions, ...newQuestions];
-      setTable('questions', questions);
-    }
-  }
+  // 1. Always synchronize questions table with full rich INITIAL_QUESTIONS
+  const currentQuestions = getTable('questions') || [];
+  const existingMap = new Map(currentQuestions.map((q) => [q.id, q]));
+  
+  // Merge: INITIAL_QUESTIONS is canonical source of truth for bank questions & categories
+  const synchronizedQuestions = INITIAL_QUESTIONS.map((initQ) => {
+    const existing = existingMap.get(initQ.id);
+    return existing ? { ...existing, ...initQ } : initQ;
+  });
+  setTable('questions', synchronizedQuestions);
 
   // 2. Ensure categories table is seeded
-  let categories = getTable('categories');
-  if (!categories || categories.length === 0) {
-    setTable('categories', QUESTION_CATEGORIES);
-  }
+  setTable('categories', QUESTION_CATEGORIES);
 
   // 3. Seed demo user (Afrin S, userId: "1001") if no question attempts exist
   const attempts = getTable('question_attempts');
@@ -166,13 +159,18 @@ export function getQuestions({ category, difficulty, limit = 10 } = {}) {
   }
   let filtered = all;
 
+  // Strict category filtering
   if (category && category !== 'mixed_quiz' && category !== 'all') {
-    const byCat = filtered.filter((q) => q.category === category);
-    if (byCat.length > 0) filtered = byCat;
+    const byCat = all.filter((q) => q.category === category);
+    filtered = byCat.length > 0 ? byCat : all;
   }
-  if (difficulty && difficulty !== 'All') {
+
+  // Difficulty filtering
+  if (difficulty && difficulty !== 'All' && difficulty !== null) {
     const byDiff = filtered.filter((q) => q.difficulty === difficulty);
-    if (byDiff.length > 0) filtered = byDiff;
+    if (byDiff.length > 0) {
+      filtered = byDiff;
+    }
   }
 
   if (filtered.length === 0) {

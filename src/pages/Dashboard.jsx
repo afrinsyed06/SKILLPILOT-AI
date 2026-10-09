@@ -210,7 +210,7 @@ export default function Dashboard() {
             <motion.div
               key={cat.id}
               whileHover={{ scale: 1.02, y: -2 }}
-              onClick={() => navigate(`/arena?category=${cat.id}&start=true`)}
+              onClick={() => navigate(`/arena?category=${cat.id}&mode=skill_builder&start=true`)}
               className="p-4 rounded-2xl bg-white border border-blue-100 hover:border-blue-400 shadow-sm hover:shadow-md transition-all cursor-pointer flex flex-col justify-between group relative overflow-hidden"
             >
               <div className="space-y-2">

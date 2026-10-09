@@ -3,10 +3,14 @@ import { Outlet } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import Topbar from './Topbar';
 import SearchModal from '../ui/SearchModal';
+import AppFooter from './AppFooter';
+import FeedbackModal from '../features/FeedbackModal';
+import FloatingAIChatbot from '../features/FloatingAIChatbot';
 
 export default function Layout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [feedbackOpen, setFeedbackOpen] = useState(false);
 
   // Global keyboard shortcut: Ctrl+K / Cmd+K
   useEffect(() => {
@@ -49,15 +53,25 @@ export default function Layout() {
           onMenuClick={() => setSidebarOpen((o) => !o)}
           onSearchClick={() => setSearchOpen(true)}
         />
-        <main className="flex-1 overflow-y-auto overflow-x-hidden">
-          <div className="p-4 md:p-6 max-w-7xl mx-auto w-full">
+        <main className="flex-1 overflow-y-auto overflow-x-hidden flex flex-col justify-between">
+          <div className="p-4 md:p-6 max-w-7xl mx-auto w-full flex-1">
             <Outlet />
           </div>
+
+          {/* ── App Footer & Feedback Option Below of the App ── */}
+          <AppFooter onOpenFeedback={() => setFeedbackOpen(true)} />
         </main>
       </div>
 
       {/* Search Modal */}
       <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
+
+      {/* Interactive User Feedback Modal */}
+      <FeedbackModal isOpen={feedbackOpen} onClose={() => setFeedbackOpen(false)} />
+
+      {/* Persistent Floating Generative AI Chatbot */}
+      <FloatingAIChatbot onOpenFeedback={() => setFeedbackOpen(true)} />
     </div>
   );
 }
+

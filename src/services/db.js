@@ -704,5 +704,42 @@ export function getStreakCalendarData(userId, year, month) {
   };
 }
 
+// ─── USER FEEDBACK REPOSITORY ────────────────────────────────────────────────
+export function saveUserFeedback({
+  userId = '1001',
+  userName = 'Student',
+  userEmail = 'student@example.com',
+  rating = 5,
+  category = 'General',
+  comments = '',
+  pageUrl = window.location.pathname,
+}) {
+  const feedbacks = getTable('feedback_submissions') || [];
+  const submission = {
+    id: 'fb_' + Date.now() + '_' + Math.floor(Math.random() * 1000),
+    user_id: String(userId),
+    user_name: userName,
+    user_email: userEmail,
+    rating: Number(rating),
+    category,
+    comments: comments.trim(),
+    page_url: pageUrl,
+    timestamp: new Date().toISOString(),
+  };
+
+  const updated = [submission, ...feedbacks];
+  setTable('feedback_submissions', updated);
+  return submission;
+}
+
+export function getUserFeedbacks(userId = '1001') {
+  const all = getTable('feedback_submissions') || [];
+  return all.filter((f) => String(f.user_id) === String(userId));
+}
+
+export function getAllFeedbacks() {
+  return getTable('feedback_submissions') || [];
+}
+
 // Auto-initialize on import
 initDatabase();

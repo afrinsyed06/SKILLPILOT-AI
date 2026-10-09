@@ -62,11 +62,19 @@ function setTable(name, data) {
 
 // ─── INITIALIZATION & SEEDING ────────────────────────────────────────────────
 export function initDatabase() {
-  // 1. Ensure questions table is seeded
+  // 1. Ensure questions table is seeded & merged with new questions
   let questions = getTable('questions');
   if (!questions || questions.length === 0) {
     questions = INITIAL_QUESTIONS;
     setTable('questions', questions);
+  } else {
+    // Merge any newly added INITIAL_QUESTIONS into the questions table
+    const existingIds = new Set(questions.map((q) => q.id));
+    const newQuestions = INITIAL_QUESTIONS.filter((q) => !existingIds.has(q.id));
+    if (newQuestions.length > 0) {
+      questions = [...questions, ...newQuestions];
+      setTable('questions', questions);
+    }
   }
 
   // 2. Ensure categories table is seeded
@@ -119,10 +127,11 @@ function seedDemoUserData(demoUserId) {
 
   // Seed Streak for Demo user (8 days)
   const streaks = getTable('streaks');
+  const todayStr = new Date().toISOString().split('T')[0];
   const demoStreak = {
     user_id: demoUserId,
     current_streak: 8,
-    last_active_date: new Date().toISOString().split('T')[0],
+    last_active_date: todayStr,
     history_days: [
       { day: 'Mon', active: true },
       { day: 'Tue', active: true },
@@ -136,6 +145,16 @@ function seedDemoUserData(demoUserId) {
   };
   const filteredStreaks = streaks.filter((s) => String(s.user_id) !== demoUserId);
   setTable('streaks', [...filteredStreaks, demoStreak]);
+
+  // Seed streak_activity_log for past 8 consecutive active days
+  const activityLogs = getTable('streak_activity_log');
+  const demoLogs = [];
+  for (let i = 0; i < 8; i++) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    demoLogs.push({ user_id: demoUserId, date: d.toISOString().split('T')[0] });
+  }
+  setTable('streak_activity_log', [...activityLogs, ...demoLogs]);
 }
 
 // ─── QUESTIONS & ATTEMPTS API ────────────────────────────────────────────────
@@ -228,6 +247,9 @@ export function recordQuestionAttempt({
   if (earnedXP > 0) {
     logXPTransaction(userId, earnedXP, 'QUESTION_CORRECT', `Answered ${q.topic} question correctly`);
   }
+
+  // 4. Record streak activity day
+  recordStreakDay(userId, new Date().toISOString().split('T')[0]);
 
   return {
     attempt,
@@ -495,6 +517,193 @@ export function getLeaderboardData({ type = 'global' }) {
   }
 
   return demoUsers;
+}
+
+// ─── DAILY CHALLENGE ENGINE ──────────────────────────────────────────────────
+export function getDailyChallenge(dateStr) {
+  const todayStr = dateStr || new Date().toISOString().split('T')[0];
+
+  // Deterministic seed from date string (e.g. '2026-10-09' -> consistent hash)
+  let hash = 0;
+  for (let i = 0; i < todayStr.length; i++) {
+    hash = (hash << 5) - hash + todayStr.charCodeAt(i);
+    hash |= 0;
+  }
+  const absHash = Math.abs(hash);
+
+  let allQuestions = getTable('questions');
+  if (!allQuestions || allQuestions.length === 0) {
+    allQuestions = INITIAL_QUESTIONS;
+  }
+
+  // 5 complementary categories for daily diverse practice
+  const categoryPools = [
+    { cat: 'aptitude', name: 'Aptitude & Logic' },
+    { cat: 'programming', name: 'Programming Fundamentals' },
+    { cat: 'dsa', name: 'Data Structures & Algorithms' },
+    { cat: 'sql_dbms', name: 'Databases & System Core' },
+    { cat: 'ai_ml', name: 'AI & Engineering Horizons' },
+  ];
+
+  const selectedQuestions = [];
+  categoryPools.forEach((pool, idx) => {
+    let poolQuestions = allQuestions.filter((q) => q.category === pool.cat);
+    if (poolQuestions.length === 0) {
+      poolQuestions = allQuestions.filter((q) => q.category === 'cs_core' || q.category === 'coding_challenge');
+    }
+    if (poolQuestions.length === 0) {
+      poolQuestions = allQuestions;
+    }
+    // Pick deterministically with prime offset per day
+    const pickIndex = (absHash + idx * 7) % poolQuestions.length;
+    const picked = poolQuestions[pickIndex];
+    if (picked && !selectedQuestions.some((q) => q.id === picked.id)) {
+      selectedQuestions.push(picked);
+    } else {
+      // Fallback to next unused question
+      const unused = poolQuestions.find((q) => !selectedQuestions.some((sq) => sq.id === q.id));
+      selectedQuestions.push(unused || picked || poolQuestions[0]);
+    }
+  });
+
+  // Daily themes & titles rotation
+  const titles = [
+    'Algorithm Agility & Core Foundations',
+    'Sliding Window & Query Optimization Sprint',
+    'System Architecture & Concurrency Challenge',
+    'Aptitude Speed & Tree Traversals',
+    'Full-Stack Logic & Memory Dynamics',
+    'Placement Readiness Mastery Sprint',
+    'Boss Preparation & Quantitative Aptitude',
+  ];
+  const title = titles[absHash % titles.length];
+
+  // Format human-readable date e.g. "Friday, Oct 9"
+  const [year, month, day] = todayStr.split('-').map(Number);
+  const dateObj = new Date(year, (month || 1) - 1, day || 1);
+  const formattedDate = dateObj.toLocaleDateString('en-US', {
+    weekday: 'short',
+    month: 'short',
+    day: 'numeric',
+  });
+
+  return {
+    date: todayStr,
+    formattedDate,
+    title,
+    theme: selectedQuestions.map((q) => q.topic).filter(Boolean).slice(0, 3).join(' • '),
+    questions: selectedQuestions,
+    questionCount: selectedQuestions.length,
+    xpReward: 150,
+    streakBonus: 1,
+  };
+}
+
+export function isDailyChallengeCompleted(userId, dateStr) {
+  const targetDate = dateStr || new Date().toISOString().split('T')[0];
+  const logs = getTable('daily_challenges');
+  return logs.some((entry) => String(entry.user_id) === String(userId) && entry.date === targetDate);
+}
+
+export function completeDailyChallenge(userId, dateStr, score = 5) {
+  const targetDate = dateStr || new Date().toISOString().split('T')[0];
+  const logs = getTable('daily_challenges');
+
+  const alreadyDone = logs.some((entry) => String(entry.user_id) === String(userId) && entry.date === targetDate);
+  if (alreadyDone) {
+    return { alreadyCompleted: true, xpEarned: 0 };
+  }
+
+  const record = {
+    id: 'dc_' + Date.now(),
+    user_id: String(userId),
+    date: targetDate,
+    score,
+    completed_at: new Date().toISOString(),
+    bonus_xp: 150,
+  };
+  setTable('daily_challenges', [record, ...logs]);
+
+  // Log bonus XP transaction
+  logXPTransaction(userId, 150, 'DAILY_CHALLENGE', `Completed Daily Challenge for ${targetDate}`);
+
+  // Record active streak day
+  recordStreakDay(userId, targetDate);
+
+  return { alreadyCompleted: false, xpEarned: 150, record };
+}
+
+// ─── STREAK TRACKING & CALENDAR ENGINE ───────────────────────────────────────
+export function recordStreakDay(userId, dateStr) {
+  const targetDate = dateStr || new Date().toISOString().split('T')[0];
+  const logs = getTable('streak_activity_log');
+  if (!logs.some((l) => String(l.user_id) === String(userId) && l.date === targetDate)) {
+    setTable('streak_activity_log', [{ user_id: String(userId), date: targetDate }, ...logs]);
+  }
+
+  // Update streak counter in streaks table
+  const streaks = getTable('streaks');
+  const userStreak = streaks.find((s) => String(s.user_id) === String(userId));
+  if (userStreak) {
+    if (userStreak.last_active_date !== targetDate) {
+      userStreak.current_streak = (userStreak.current_streak || 0) + 1;
+      userStreak.last_active_date = targetDate;
+      setTable('streaks', streaks);
+    }
+  } else {
+    setTable('streaks', [
+      ...streaks,
+      {
+        user_id: String(userId),
+        current_streak: 1,
+        last_active_date: targetDate,
+      },
+    ]);
+  }
+}
+
+export function getStreakCalendarData(userId, year, month) {
+  const now = new Date();
+  const targetYear = typeof year === 'number' ? year : now.getFullYear();
+  const targetMonth = typeof month === 'number' ? month : now.getMonth();
+
+  const streakLogs = getTable('streak_activity_log').filter((l) => String(l.user_id) === String(userId));
+  const dailyLogs = getTable('daily_challenges').filter((l) => String(l.user_id) === String(userId));
+  const attempts = getTable('question_attempts').filter((l) => String(l.user_id) === String(userId));
+
+  const activeDatesSet = new Set();
+  streakLogs.forEach((l) => l.date && activeDatesSet.add(l.date));
+  dailyLogs.forEach((l) => l.date && activeDatesSet.add(l.date));
+  attempts.forEach((a) => {
+    if (a.timestamp) {
+      activeDatesSet.add(a.timestamp.split('T')[0]);
+    }
+  });
+
+  // For demo student (1001), guarantee recent 8 consecutive active days ending today
+  if (String(userId) === '1001') {
+    for (let i = 0; i < 8; i++) {
+      const d = new Date(now);
+      d.setDate(d.getDate() - i);
+      activeDatesSet.add(d.toISOString().split('T')[0]);
+    }
+  }
+
+  const streaks = getTable('streaks');
+  const userStreak = streaks.find((s) => String(s.user_id) === String(userId));
+  const currentStreak = userStreak ? userStreak.current_streak : (activeDatesSet.size > 0 ? activeDatesSet.size : 1);
+
+  const dailyCompletedSet = new Set(dailyLogs.map((l) => l.date));
+
+  return {
+    year: targetYear,
+    month: targetMonth,
+    activeDates: Array.from(activeDatesSet),
+    dailyCompletedDates: Array.from(dailyCompletedSet),
+    currentStreak,
+    longestStreak: Math.max(currentStreak, 14),
+    freezesAvailable: 1,
+  };
 }
 
 // Auto-initialize on import

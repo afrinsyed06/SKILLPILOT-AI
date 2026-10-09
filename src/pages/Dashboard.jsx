@@ -277,7 +277,7 @@ export default function Dashboard() {
         </motion.div>
 
         <motion.div variants={itemVariants} className="lg:col-span-5">
-          <StreakCard streak={streak} />
+          <StreakCard streak={streak} userId={userId} />
         </motion.div>
       </div>
 
